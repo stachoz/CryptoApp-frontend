@@ -1,21 +1,34 @@
 import { Component } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { passwordMatchValidator } from '../../shared/password-match.directive';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { zip } from 'rxjs';
+import { UserService } from '../_services/user/user.service';
+import { User } from '../_models/User';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrl: './register.component.css'
+  styleUrl: './register.component.css',
 })
 export class RegisterComponent {
 
-  constructor(private fb:FormBuilder, private router: Router){}
-
   registerForm = this.fb.group({
-    username: ['', Validators.min(4), Validators.max(100), Validators.required],
-    email: ['', Validators.required, Validators.email],
-    password: ['', Validators.min(4), Validators.max(100), Validators.required],
-    confirmPassword: ['', Validators.min(4), Validators.max(100), Validators.required]
-  }, {validators: passwordMatchValidator})
+    username: [''],
+    email: [''],
+    password: ['']
+  });
+
+  constructor(private fb:FormBuilder, private userService:UserService){}
+  
+  onSubmit() {
+    const {username, email, password} = this.registerForm.value;
+    if(username && email && password){
+      const user = new User(username, email, password);
+      this.userService.registerUser(user)
+        .subscribe(
+          response => {
+            console.log('registration succesfull', response);
+          }
+        )
+    }
+  }
 }
