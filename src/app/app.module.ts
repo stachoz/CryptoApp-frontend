@@ -6,12 +6,14 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { PriceTrackerComponent } from './price-tracker/price-tracker.component';
 import { HttpClientModule } from '@angular/common/http';
+import { RegisterComponent } from './register/register.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    PriceTrackerComponent
+    PriceTrackerComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
