@@ -1,0 +1,5 @@
+<div class="container">
+    <div *ngFor="let coin of coinData.entries()">
+        <p>{{coin[0]}}: {{coin[1] | currency}}</p>
+    </div>
+</div>
