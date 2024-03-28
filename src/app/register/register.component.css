@@ -1,28 +1,42 @@
 form {
     display: flex;
     flex-direction: column;
-    width: 30em;
+    width: 30rem;
 }
 
 label {
-    padding: 0.5em 0;
+    font-size: 1rem;
+    padding: 0.5rem 0;
     font-weight: 700;
 }
 
 input {
-    height: 2em;
+    height: 2.5rem;
+    font-size: 1.1rem;
+    margin-bottom: 0.2em;
 }
 
 button {
-    width: 8em;
-    height: 2em;
-    margin: 1em auto;
+    width: 8rem;
+    height: 2rem;
+    margin: 1rem auto;
+    background-color: white;
+    text-decoration: none;    
+    font-size: 1rem;
+    border: 1px solid black;
+}
+
+button:hover {
+    cursor: pointer;
+    background-color: whitesmoke;
 }
 
 .container {
-    padding: 2em;
+    padding: 2rem;
     display: flex;
     justify-content: center;
 }
 
-
+.isRegistered {
+    margin-top: 0.3rem;
+}

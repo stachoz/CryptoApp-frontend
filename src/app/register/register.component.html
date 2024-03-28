@@ -30,7 +30,8 @@
         <small *ngIf="registerForm.errors?.['passwordMismatch'] && confirmPassword.valid && password.valid">
             Password must match
         </small>
-
-        <button type="submit">Submit</button>
+        <div class="isRegistered">Already have account? <a routerLink="/login">Login</a></div>
+        <button type="submit" [disabled]="registerForm.invalid">Register</button>
+        
     </form>
 </div>
