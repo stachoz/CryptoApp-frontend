@@ -2,12 +2,34 @@
     <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
         <label for="username">Username: </label>
         <input id="username" type="text" formControlName="username">
+        <small *ngIf="username.invalid && (username.dirty || username.touched)">
+            <div *ngIf="username.errors?.['required']">Username is required</div>
+            <div *ngIf="username.errors?.['minlength'] || username.errors?.['maxlength']">Username lenght must be between {{min}} and {{max}}</div>
+        </small>
         
         <label for="email">Email: </label>
         <input id="email" type="text" formControlName="email">
+        <small *ngIf="email.invalid && (email.dirty || email.touched)">
+            <div *ngIf="email.errors?.['required']">Email is required</div>
+            <div *ngIf="email.errors?.['email']">Invalid email</div>
+            <div *ngIf="email.errors?.['minlength'] || email.errors?.['maxlength']">Email lenght must be between {{min}} and {{max}}</div>
+        </small>
 
         <label for="password">Password: </label>
         <input id="password" type="password" formControlName="password">
+        <small *ngIf="password.invalid && (password.dirty || password.touched)">
+            <div *ngIf="password.errors?.['required']">Password is required</div>
+            <div *ngIf="password.errors?.['minlength'] || password.errors?.['maxlength']">Password lenght must be between {{min}} and {{max}}</div>
+        </small>
+
+        <label for="confirmPassword">Repeat Password: </label>
+        <input id="confirmPassword" type="password" formControlName="confirmPassword">
+        <small *ngIf="confirmPassword.invalid && (confirmPassword.dirty || confirmPassword.touched)">
+            <div *ngIf="confirmPassword.errors?.['required']">Confrim password is required</div>
+        </small>
+        <small *ngIf="registerForm.errors?.['passwordMismatch'] && confirmPassword.valid && password.valid">
+            Password must match
+        </small>
 
         <button type="submit">Submit</button>
     </form>
