@@ -1,4 +1,9 @@
 <div class="container">
+    <div class="errorsResponse">
+        <ul>
+            <li *ngFor="let error of errorsResponse"> {{error}}</li>
+        </ul>
+    </div>
     <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
         <label for="username">Username: </label>
         <input id="username" type="text" formControlName="username">

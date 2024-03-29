@@ -12,6 +12,7 @@ import { passwordMatchValidator } from '../../shared/password-match.directive';
 export class RegisterComponent {
   min:number = 4;
   max:number = 100;
+  errorsResponse:string[] = [];
 
   registerForm = this.fb.group({
     username: ['', [Validators.required, Validators.minLength(this.min), Validators.maxLength(this.max)]],
@@ -46,11 +47,16 @@ export class RegisterComponent {
     if(username && email && password){
       const user = new User(username, email, password);
       this.userService.registerUser(user)
-        .subscribe(
-          response => {
-            console.log('registration succesfull', response);
+        .subscribe({
+          next: () => {
+            console.log("registration successufl");
+          },
+          error: (error) => {
+            this.errorsResponse = error.error.errors;
           }
-        )
+        });
     }
   }
+  
+
 }

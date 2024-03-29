@@ -13,10 +13,4 @@ export class CoinService {
   getCoins(): Observable<string[]> {
     return this.http.get<string[]>('http://localhost:8080/api/v1/coins');
   }
-
-  manageCoinData(coinSymbol: string, coinPrice: number) : Map<string, number>{
-    const resultString = coinSymbol.replace('USDT', '');
-    this.coinData.set(resultString, coinPrice);
-    return this.coinData;
-  }
 }
