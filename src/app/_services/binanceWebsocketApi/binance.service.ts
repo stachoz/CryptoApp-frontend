@@ -21,6 +21,9 @@ export class BinanceService{
       let webSocketUrl = this.binanceWebSocketUrl + coinStreams;
       console.log('full url: ' + webSocketUrl);
       this.ws = new WebSocket(webSocketUrl);
+      this.ws.onerror = (error) => {
+        console.error(error);
+      }
       this.wsSubject.next(this.ws);
     });
   }

@@ -45,8 +45,7 @@ export class RegisterComponent {
   onSubmit() {
     const {username, email, password} = this.registerForm.value;
     if(username && email && password){
-      const user = new User(username, email, password);
-      this.userService.registerUser(user)
+      this.userService.registerUser(username, email, password)
         .subscribe({
           next: () => {
             console.log("registration successufl");

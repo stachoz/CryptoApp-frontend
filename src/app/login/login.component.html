@@ -1,0 +1,17 @@
+<div class="container">
+    <form [formGroup]="loginForm">
+        <label for="username">Username: </label>
+        <input id="username" type="text" formControlName="username">
+        <small *ngIf="username.invalid && (username.dirty || username.touched)">
+            <div *ngIf="username.errors?.['required']">Username is required</div>
+        </small>
+
+        <label for="password">Password: </label>
+        <input id="password" type="password" formControlName="password">
+        <small *ngIf="password.invalid && (password.dirty || password.touched)">
+            <div *ngIf="password.errors?.['required']">Username is required</div>
+        </small>
+        <div class="register">Don't have account? <a routerLink="/register">Register</a></div>
+        <button type="submit" [disabled]="loginForm.invalid" (click)="login()">Log in</button>
+    </form>
+</div>
