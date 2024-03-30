@@ -1,4 +1,4 @@
 export class LoginResponse {
-    token!: string;
+    accessToken!: string;
     tokenType!: string;
 }

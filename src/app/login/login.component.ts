@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { UserService } from '../_services/user/user.service';
 import { Router } from '@angular/router';
+import { AuthService } from '../_services/auth/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +16,7 @@ export class LoginComponent {
     password: ['', Validators.required]
   })
 
-  constructor(private fb:FormBuilder, private userService:UserService, private router:Router){}
+  constructor(private fb:FormBuilder, private authService:AuthService, private router:Router){}
 
   get username(){
     return this.loginForm.controls['username'];
@@ -28,10 +29,9 @@ export class LoginComponent {
   login() {
       const val = this.loginForm.value;
       if(val.username && val.password){
-        this.userService.login(val.username, val.password)
+        this.authService.login(val.username, val.password)
           .subscribe(
               () => {
-                  console.log("User is logged in");
                   this.router.navigateByUrl('/');
               }
           )

@@ -19,7 +19,6 @@ export class BinanceService{
     this.coinService.getCoins().subscribe(coins => {
       let coinStreams = coins.map(coin => coin + 'usdt@avgPrice').join('/');
       let webSocketUrl = this.binanceWebSocketUrl + coinStreams;
-      console.log('full url: ' + webSocketUrl);
       this.ws = new WebSocket(webSocketUrl);
       this.ws.onerror = (error) => {
         console.error(error);

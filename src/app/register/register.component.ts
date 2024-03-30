@@ -2,7 +2,9 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UserService } from '../_services/user/user.service';
 import { User } from '../_models/User';
-import { passwordMatchValidator } from '../../shared/password-match.directive';
+import { passwordMatchValidator } from '../_helpers/password-match.directive';
+import { AuthService } from '../_services/auth/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -24,7 +26,7 @@ export class RegisterComponent {
   }
   );
 
-  constructor(private fb:FormBuilder, private userService:UserService){}
+  constructor(private fb:FormBuilder, private authService:AuthService, private router: Router){}
 
   get username(){
     return this.registerForm.controls['username'];
@@ -45,10 +47,10 @@ export class RegisterComponent {
   onSubmit() {
     const {username, email, password} = this.registerForm.value;
     if(username && email && password){
-      this.userService.registerUser(username, email, password)
+      this.authService.registerUser(username, email, password)
         .subscribe({
           next: () => {
-            console.log("registration successufl");
+            this.router.navigateByUrl('/login');
           },
           error: (error) => {
             this.errorsResponse = error.error.errors;
