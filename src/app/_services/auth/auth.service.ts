@@ -3,9 +3,9 @@ import { Injectable, createNgModule } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, map } from 'rxjs';
 import { User } from '../../_models/User';
-import { LoginResponse } from '../../_models/LoginResponse';
-import { environment } from '../../../environments/environment';
 import { UserCredentails } from '../../_models/UserCredentials';
+import { environment } from '../../../environments/environment';
+import { LoginResponse } from '../../_models/LoginResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -29,8 +29,9 @@ export class AuthService {
       .pipe(map((response) => {
         const userCredentials = new UserCredentails(username, response.accessToken);
         localStorage.setItem('user', JSON.stringify(userCredentials));
+        this.userCredentialsSubject.next(userCredentials);
         return userCredentials;
-      }))
+      }));
   }
 
   logout() {
