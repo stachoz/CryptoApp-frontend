@@ -1,5 +1,8 @@
 <div class="container">
-    <div *ngFor="let coin of coinDataArray()">
-        <p>{{coin[0]}}: {{coin[1] | currency}}</p>
-    </div>
+    <div>
+        <div *ngFor="let coin of coinDataArray()" class="coin-wrapper">
+            <div class="coin-name">{{coin[0]}}:</div>
+            <div class="coin-price">{{coin[1] | currency}}</div>
+        </div>
+    </div>  
 </div>

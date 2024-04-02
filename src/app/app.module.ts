@@ -12,6 +12,8 @@ import { LoginComponent } from './login/login.component';
 import { JwtIterceptor } from './_helpers/jwt.interceptor';
 import { ErrorInterceptor } from './_helpers/error.interceptor';
 import { ProfileComponent } from './profile/profile.component';
+import { PostComponent } from './post/post.component';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,9 @@ import { ProfileComponent } from './profile/profile.component';
     PriceTrackerComponent,
     RegisterComponent,
     LoginComponent,
-    ProfileComponent
+    ProfileComponent,
+    PostComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

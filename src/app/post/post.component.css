@@ -1,0 +1,41 @@
+.container {
+    margin: 1rem 0.5rem;
+}
+
+.post {
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    background-color: whitesmoke;
+    border-radius: 1rem;
+}
+
+
+.info {
+    display: flex;
+    justify-content: space-between;
+}
+
+.author {
+    font-weight: 600;
+}
+
+.time-added {
+    padding-top: 5px;
+    font-size: 0.8rem;
+}
+
+.title {
+    display: flex;
+    justify-content: center;
+    font-weight: 500;
+}
+
+p {
+    margin: 0.6rem 1rem;
+}
+
+.content {
+    font-size: 1rem;
+    padding-left: 1rem;
+    border-left: 3px solid blue;
+}
