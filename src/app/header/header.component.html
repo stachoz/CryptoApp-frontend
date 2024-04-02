@@ -3,10 +3,10 @@
         <a class="logo" routerLink="/">CryptoApp</a>
         <nav>
             <ul>
-                <li><a routerLink="register">Register</a></li>
-                <li><a routerLink="login">Login</a></li>
-                <li><a routerLink="profile">Profile</a></li>
-                <li><a (click)="logout()">Logout</a></li>
+                <li *ngIf="!isAuthenticated()"><a routerLink="register">Register</a></li>
+                <li *ngIf="!isAuthenticated()"><a routerLink="login">Login</a></li>
+                <li *ngIf="isAuthenticated()"><a routerLink="profile">Profile</a></li>
+                <li *ngIf="isAuthenticated()"><a (click)="logout()">Logout</a></li>
             </ul>
         </nav>
     </div>

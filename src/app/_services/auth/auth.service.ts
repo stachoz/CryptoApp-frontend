@@ -43,4 +43,8 @@ export class AuthService {
   get userValue() {
     return this.userCredentialsSubject.value;
   }
+
+  isAuthenticated() : boolean {
+    return this.userValue ? true : false;
+  }
 }

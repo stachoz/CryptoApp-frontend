@@ -15,6 +15,8 @@ export class LoginComponent {
     password: ['', Validators.required]
   })
 
+  loginError: boolean = false;
+
   constructor(private fb:FormBuilder, private authService:AuthService, private router:Router){}
 
   get username(){
@@ -32,7 +34,10 @@ export class LoginComponent {
           .subscribe(
               () => {
                   this.router.navigateByUrl('/');
-              }
+              },
+              (error) => {
+                this.loginError = true;
+              } 
           )
       }
     }
