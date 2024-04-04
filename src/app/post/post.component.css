@@ -1,5 +1,45 @@
+textarea {
+    resize: none;
+    width: 100%;
+    background-color: whitesmoke;
+    border-radius: 1rem;
+    border: none;
+    height: 5rem;
+    padding: 0.5rem;    
+    font-size: 1rem;
+}
+
+button {
+    border-radius: 0.7rem;
+    text-decoration: none;
+    padding: 0.4rem;
+    font-size: 0.95rem;
+    border: none;
+    margin: 0.3rem 0 0.5rem 0;
+}
+
+button:hover {
+    cursor: pointer;
+    background-color: grey;
+    color: white;
+}
+
+p {
+    margin: 0.6rem 1rem;
+}
+
 .container {
     margin: 1rem 0.5rem;
+    padding: 1rem;
+}
+
+.btn-wrapper {
+    display: flex;
+    justify-content: end;
+}
+
+.posts {
+    overflow-y: scroll;
 }
 
 .post {
@@ -8,7 +48,6 @@
     background-color: whitesmoke;
     border-radius: 1rem;
 }
-
 
 .info {
     display: flex;
@@ -30,12 +69,14 @@
     font-weight: 500;
 }
 
-p {
-    margin: 0.6rem 1rem;
-}
-
 .content {
     font-size: 1rem;
     padding-left: 1rem;
     border-left: 3px solid blue;
+}
+
+.navigation {
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
 }

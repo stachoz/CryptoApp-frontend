@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Post } from '../_models/Post';
 import { PostService } from '../_services/post/post.service';
+import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-post',
@@ -8,31 +9,76 @@ import { PostService } from '../_services/post/post.service';
   styleUrl: './post.component.css'
 })
 export class PostComponent implements OnInit{
-  size:number = 10;
+  size:number = 7;
   page:number = 0;
   posts:Post[] = [];
+  totalPages:number = this.page;
+  postForm = this.fb.group({
+    content: ['', Validators.required]
+  })
 
-  constructor(private postService:PostService) {};
+  constructor(private postService:PostService, private fb:FormBuilder) {};
 
   ngOnInit(): void {
-    this.postService.getPosts(this.page, this.size)
-      .subscribe(posts => {
-        this.posts = posts;
-      })
+    this.getPosts();
+  }
+
+  addPost() {
+    const val = this.postForm.value;
+    if(val.content){
+      this.postService.addPost(val.content)
+        .subscribe(
+          {
+            next: (r) => {
+              console.log(r);
+              this.getPosts();
+              this.content.setValue('');
+            },
+            error: (e) => {
+              console.log(e);
+            }
+          }
+        )
+    }
   }
 
   getPosts(){
-    // return [
-    //   {
-    //     id: 1,
-    //     content: "Pierszy post napisany przez Stanisław Zdybla. Twórca aplikacji stowrzonej na potrzeby przedmiotu projektu."
-    //               + " Do halvingu pozostało mniej niż miesiąc. Sprzedam swoje coiny w myśl zasadzie buy the roumor sell the news.",
-    //     timeAdded: "2024-03-26T20:31:33.620+00:00",
-    //     author: "stasiek",
-    //     isVerified: true
-    //   }
-    // ]
+    this.postService.getPosts(this.page, this.size)
+      .subscribe(
+        {
+          next: (pagedResponse) => { 
+            this.posts = pagedResponse.content;
+            this.totalPages = pagedResponse.totalPages;
+          },
+          error: (e) => {this.page--;}
+        }
+      )
+        
   }
 
+  nextPage(){
+    if(this.canGetNextPage()){
+      this.page++;
+      this.getPosts();
+    }
+  }
 
+  previousPage(){
+    if(this.canGetPreviousPage()){
+      this.page--;
+      this.getPosts();
+    }
+  }
+
+  get content(){
+    return this.postForm.controls['content'];
+  }
+
+  canGetNextPage(): boolean {
+    return this.page + 1 < this.totalPages;
+  }
+
+  canGetPreviousPage(): boolean {
+    return this.page > 0;
+  }
 }

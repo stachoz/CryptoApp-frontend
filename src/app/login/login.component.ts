@@ -32,13 +32,11 @@ export class LoginComponent {
       if(val.username && val.password){
         this.authService.login(val.username, val.password)
           .subscribe(
-              () => {
-                  this.router.navigateByUrl('/');
-              },
-              (error) => {
-                this.loginError = true;
-              } 
-          )
+            {
+              complete: () => this.router.navigateByUrl('/'),
+              error: () => this.loginError = true
+            }
+          );
       }
     }
 }

@@ -1,11 +1,24 @@
 <div class="container">
-    <div class="post" *ngFor="let post of posts">
-        <div class="info">
-            <div class="author">{{ post.author }}</div>
-            <div class="time-added">{{ post.timeAdded | date: 'medium'}}</div>
+
+    <form [formGroup]="postForm">
+        <textarea id="content" formControlName="content" placeholder="Write something..."></textarea>
+        <div class="btn-wrapper">
+            <button type="submit" [disabled]="postForm.invalid" (click)="addPost()">Submit</button>
         </div>
-        <div class="content">
-            <p>{{post.content}}</p>
+    </form>
+    <div class="posts">
+        <div class="post" *ngFor="let post of posts">
+            <div class="info">
+                <div class="author">{{ post.author }}</div>
+                <div class="time-added">{{ post.timeAdded | date: 'medium'}}</div>
+            </div>
+            <div class="content">
+                <p>{{post.content}}</p>
+            </div>
+        </div>  
+        <div class="navigation">
+            <div><button [disabled]="!canGetPreviousPage()" (click)="previousPage()">Previous</button></div>
+            <div><button [disabled]="!canGetNextPage()" (click)="nextPage()">Next</button></div>
         </div>
-    </div>  
+    </div>
 </div>
