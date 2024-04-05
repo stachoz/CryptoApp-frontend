@@ -1,0 +1,54 @@
+p {
+    margin: 0;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+}
+
+.account-info {
+    width: 40%;
+    margin: 2em auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 100%;
+    background-color: whitesmoke;
+    padding: 1rem 2rem;
+    border-radius: 1.5rem;
+}
+
+.icon {
+    display: inline-block;
+    font-size: 4rem;
+    padding-right: 5rem;
+}
+
+.details {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.details-elem-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    padding: 1rem 0;
+}
+
+.details-desc {
+    font-weight: 400;
+    font-size: 0.9rem;
+}
+
+.details-elem {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.line {
+    border: 1px solid black;
+}

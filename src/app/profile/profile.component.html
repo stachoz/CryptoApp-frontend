@@ -1,2 +1,23 @@
-<p>profile</p>
-<p>{{email}}</p>
+<div class="container">
+    <div class="account-info">
+        <div class="icon">
+            <i class="fa-solid fa-circle-user"></i>
+        </div>
+        <div class="details" *ngIf="user">
+            <div class="details-elem-wrapper">
+                <p class="details-desc">username</p>
+                <p class="details-elem">{{user.username}}</p>
+            </div>
+            <div class="line"></div>
+            <div class="details-elem-wrapper">
+                <p class="details-desc">email</p>
+                <p class="details-elem">{{user.email}}</p>
+            </div>
+            <div class="line"></div>
+            <div class="details-elem-wrapper">
+                <p class="details-desc">roles</p>
+                <p class="details-elem">{{user.roles.toString().toLowerCase()}}</p>
+            </div>
+        </div>
+    </div>
+</div>
