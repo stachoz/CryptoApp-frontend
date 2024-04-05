@@ -28,8 +28,12 @@ export class PostService {
     return this.http.post<Post>(`${environment.apiUrl}/post`, {content});
   }
 
-  getPostComments(postId: number){
-    return this.http.get<Comment[]>(`${environment.apiUrl}/post/${postId}/comment/list`);
+  getPostComments(postId: number, page: number, size: number){
+    const params = {
+      'page': page,
+      'size': size
+    };
+    return this.http.get<PagedResponse<Comment>>(`${environment.apiUrl}/post/${postId}/comment/list`, {params});
   }
 
   addComment(content: string, postId: number){

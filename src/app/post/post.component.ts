@@ -56,29 +56,12 @@ export class PostComponent implements OnInit{
         
   }
 
-  nextPage(){
-    if(this.canGetNextPage()){
-      this.page++;
-      this.getPosts();
-    }
-  }
-
-  previousPage(){
-    if(this.canGetPreviousPage()){
-      this.page--;
-      this.getPosts();
-    }
+  onPageChange(page: number){
+    this.page = page;
+    this.getPosts();
   }
 
   get content(){
     return this.postForm.controls['content'];
-  }
-
-  canGetNextPage(): boolean {
-    return this.page + 1 < this.totalPages;
-  }
-
-  canGetPreviousPage(): boolean {
-    return this.page > 0;
   }
 }

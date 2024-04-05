@@ -76,7 +76,7 @@ button:hover {
     cursor: pointer;
 }
 
-.comment-form {
+.comments > :not(:first-child){
     margin: 0 0 1rem 5rem;
 }
 
@@ -86,7 +86,6 @@ button:hover {
 }
 
 .comment {
-    margin: 0 0 1rem 5rem;
     background-color: whitesmoke;
     border-radius: 1rem;
     padding: 1rem;

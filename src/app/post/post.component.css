@@ -44,7 +44,7 @@ a {
 }
 
 .posts {
-    padding-right: 0.5rem;
+    padding-right: 1rem;
     overflow-y: scroll;
     height: 75vh;
 }

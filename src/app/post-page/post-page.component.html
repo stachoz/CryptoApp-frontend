@@ -39,6 +39,8 @@
             </div>
             <div class="comment-content">{{comment.content}}</div>
         </div>
-
+        <div>
+            <app-pagination [currentPage]="page" [totalPages]="totalPages" (pageChange)="onPageChange($event)" ></app-pagination> 
+        </div>
     </div>
 </div>

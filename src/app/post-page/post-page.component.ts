@@ -11,6 +11,9 @@ import { FormBuilder, Validators } from '@angular/forms';
   styleUrl: './post-page.component.css'
 })
 export class PostPageComponent implements OnInit{
+  size:number = 10;
+  page:number = 0;
+  totalPages: number = this.page;
   post!:Post;
   comments:Comment[] = []
   commentForm = this.fb.group({
@@ -26,16 +29,19 @@ export class PostPageComponent implements OnInit{
         this.postService.getPostById(params["id"]).subscribe({
           next: (post) => {
             this.post = post;
-            this.getComments(post.id);
+            this.getComments(post.id, this.page, this.size);
           }
         })
       }
     })
   }
 
-  getComments(id: number) {
-    this.postService.getPostComments(id).subscribe({
-      next: (comments) => {this.comments = comments;}
+  getComments(id: number, page: number, size: number) {
+    this.postService.getPostComments(id, page, size).subscribe({
+      next: (pagedResponse) => {
+        this.comments = pagedResponse.content;
+        this.totalPages = pagedResponse.totalPages;
+      }
     })
   }
 
@@ -51,7 +57,7 @@ export class PostPageComponent implements OnInit{
           {
             next: (r) => {
               console.log(r);
-              this.getComments(this.post.id);
+              this.getComments(this.post.id, this.page, this.size);
               this.content.setValue('');
             },
             error: (e) => {
@@ -60,5 +66,10 @@ export class PostPageComponent implements OnInit{
           }
         )
     }
+  }
+
+  onPageChange(page: number){
+    this.page = page;
+    this.getComments(this.post.id, page, this.size);
   }
 }

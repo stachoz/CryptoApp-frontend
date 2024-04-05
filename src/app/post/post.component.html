@@ -18,9 +18,6 @@
                 </a>
             </div>
         </div>  
-        <div class="navigation">
-            <div><button [disabled]="!canGetPreviousPage()" (click)="previousPage()">Previous</button></div>
-            <div><button [disabled]="!canGetNextPage()" (click)="nextPage()">Next</button></div>
-        </div>
+        <app-pagination [currentPage]="page" [totalPages]="totalPages" (pageChange)="onPageChange($event)"></app-pagination>
     </div>
 </div>

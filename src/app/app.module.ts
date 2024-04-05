@@ -15,6 +15,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { PostComponent } from './post/post.component';
 import { HomeComponent } from './home/home.component';
 import { PostPageComponent } from './post-page/post-page.component';
+import { PaginationComponent } from './pagination/pagination.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { PostPageComponent } from './post-page/post-page.component';
     PostComponent,
     HomeComponent,
     PostPageComponent,
+    PaginationComponent,
   ],
   imports: [
     BrowserModule,
