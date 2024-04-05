@@ -1,0 +1,99 @@
+h3 {
+    display: inline-block;
+    margin: 1rem 2rem;
+    border-bottom: 2px solid whitesmoke;
+}
+
+p {
+    margin-bottom: 0;
+}
+
+textarea {
+    resize: none;
+    width: 100%;
+    background-color: whitesmoke;
+    border-radius: 1rem;
+    border: none;
+    height: 5rem;
+    padding: 1rem;    
+    font-size: 1rem;
+}
+
+button {
+    border-radius: 0.7rem;
+    text-decoration: none;
+    padding: 0.4rem;
+    font-size: 0.95rem;
+    border: none;
+    margin: 0.3rem 0 0.5rem 0;
+}
+
+button:hover {
+    cursor: pointer;
+    background-color: grey;
+    color: white;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    width: 55%;
+    margin: 2rem auto;
+}
+
+.post {
+    border-radius: 2rem;
+    background-color: whitesmoke;
+    padding: 2rem;
+    font-size: 1.2rem;
+}
+
+.info {
+    display: flex;
+    justify-content: space-between;
+}
+
+.author {
+    display: inline-block;
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+
+.timeAdded{
+    display: inline-block;
+    margin-left: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.options {
+    padding: 0.4rem 0.5rem;
+}
+
+.options:hover {
+    background-color: grey;
+    color: white;
+    border-radius: 60%;
+    cursor: pointer;
+}
+
+.comment-form {
+    margin: 0 0 1rem 5rem;
+}
+
+.btn-wrapper {
+    display: flex;
+    justify-content: end;
+}
+
+.comment {
+    margin: 0 0 1rem 5rem;
+    background-color: whitesmoke;
+    border-radius: 1rem;
+    padding: 1rem;
+}
+
+.comment-content {
+    border-left: 3px solid blue;
+    padding-left: 1rem;
+    margin-top: 0.4rem;
+}

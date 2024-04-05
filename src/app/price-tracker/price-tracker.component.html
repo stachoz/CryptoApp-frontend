@@ -2,7 +2,7 @@
     <div>
         <div *ngFor="let coin of coinDataArray()" class="coin-wrapper">
             <div class="coin-name">{{coin[0]}}:</div>
-            <div class="coin-price">{{coin[1] | currency}}</div>
+            <div class="coin-price">{{coin[1] | currency:'USD':'symbol': '1.3'}}</div>
         </div>
     </div>  
 </div>

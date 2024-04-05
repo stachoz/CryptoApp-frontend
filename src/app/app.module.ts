@@ -14,6 +14,7 @@ import { ErrorInterceptor } from './_helpers/error.interceptor';
 import { ProfileComponent } from './profile/profile.component';
 import { PostComponent } from './post/post.component';
 import { HomeComponent } from './home/home.component';
+import { PostPageComponent } from './post-page/post-page.component';
 
 @NgModule({
   declarations: [
@@ -24,13 +25,14 @@ import { HomeComponent } from './home/home.component';
     LoginComponent,
     ProfileComponent,
     PostComponent,
-    HomeComponent
+    HomeComponent,
+    PostPageComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtIterceptor, multi: true },

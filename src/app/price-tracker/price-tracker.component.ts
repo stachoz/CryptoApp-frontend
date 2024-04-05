@@ -12,20 +12,21 @@ export class PriceTrackerComponent implements OnInit{
   constructor(private binanceService:BinanceService) {}
 
   ngOnInit(): void {
-    // this.websocketConnection();
-    this.coinData.set("BTC", 231.12);
-    this.coinData.set("LTC", 231.12);
-    this.coinData.set("BNB", 231.12);
-    this.coinData.set("DOGE", 231.12);
-    this.coinData.set("MATIC", 231.12);
-    this.coinData.set("ALGO", 231.12);
-    this.coinData.set("USDT", 231.12);
+    this.websocketConnection();
+    // this.coinData.set("BTC", 231.12);
+    // this.coinData.set("LTC", 231.12);
+    // this.coinData.set("BNB", 231.12);
+    // this.coinData.set("DOGE", 231.12);
+    // this.coinData.set("MATIC", 231.12);
+    // this.coinData.set("ALGO", 231.12);
+    // this.coinData.set("USDT", 231.12);
   }
 
   websocketConnection() {
     this.binanceService.getWebSocket().subscribe(
       ws => {
         ws.onmessage = (event: { data: any; }) => {
+          console.log(event.data);
           const data =  JSON.parse(event.data);
           const currentPice = data.w;
           const symbol = data.s.replace('USDT', '');

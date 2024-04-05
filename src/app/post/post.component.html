@@ -13,7 +13,9 @@
                 <div class="time-added">{{ post.timeAdded | date: 'medium'}}</div>
             </div>
             <div class="content">
-                <p>{{post.content}}</p>
+                <a routerLink="post/{{post.id}}">
+                    <p>{{post.content}}</p>
+                </a>
             </div>
         </div>  
         <div class="navigation">

@@ -1,0 +1,44 @@
+<div class="container">
+    <div class="post" *ngIf="post">
+        <div class="info">
+            <div>
+                <div class="author">
+                    {{post.author}}
+                </div>
+                <div class="timeAdded">
+                    {{post.timeAdded | date: 'medium'}}
+                </div>
+            </div>
+            <div class="options">
+                <i class="fa-solid fa-ellipsis"></i>
+            </div>
+        </div>
+        <div class="content">
+            <p>{{post.content}}</p>
+        </div>
+    </div>
+    <div class="comments">
+        <h3>Comments</h3>
+        <div class="comment-form">
+            <form [formGroup]="commentForm">
+                <textarea id="content" formControlName="content" placeholder="comment post..."></textarea>
+                <div class="btn-wrapper">
+                    <button type="submit" [disabled]="commentForm.invalid" (click)="addComment()">Submit</button>
+                </div>
+            </form>
+        </div>
+        <div class="comment" *ngFor="let comment of comments">
+            <div class="info">
+                <div>
+                    <div class="author">{{comment.authorUsername}}</div>
+                    <div class="timeAdded">{{comment.timeAdded | date: 'medium'}}</div>
+                </div>
+                <div class="options">
+                    <i class="fa-solid fa-ellipsis"></i>
+                </div>
+            </div>
+            <div class="comment-content">{{comment.content}}</div>
+        </div>
+
+    </div>
+</div>

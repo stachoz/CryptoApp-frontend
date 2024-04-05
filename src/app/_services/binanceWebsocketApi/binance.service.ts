@@ -11,7 +11,7 @@ export class BinanceService{
   private wsSubject: ReplaySubject<WebSocket> = new ReplaySubject<WebSocket>(1);
 
   constructor(private coinService:CoinService) { 
-    this.connect();
+    // this.connect();
   }
 
 
