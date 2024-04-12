@@ -2,17 +2,21 @@ p {
     margin: 0;
 }
 
+h3 {
+    margin-top: 0;
+    font-weight: 600;
+}
+
 .container {
     display: flex;
     flex-direction: column;
+    width: 40%;
+    margin: 2rem auto;
 }
 
 .account-info {
-    width: 40%;
-    margin: 2em auto;
     display: flex;
     flex-direction: row;
-    align-items: center;
     height: 100%;
     background-color: whitesmoke;
     padding: 1rem 2rem;
@@ -51,4 +55,32 @@ p {
 
 .line {
     border: 1px solid black;
+}
+
+.wallet-value {
+    display: flex;
+    align-items: center;
+}
+
+.wallet-value > div > p {
+    font-size: 2rem;
+    font-weight: 600;
+}
+
+.wallet-icon {
+    padding: 2rem;
+    font-size: 4rem;
+}
+
+.user-coins {
+    padding: 0rem 2rem 1rem 2rem;
+}
+
+.coins {
+    width: 50%;
+    margin: 0 auto;
+    background-color: whitesmoke;
+    padding: 1rem;
+    border-radius: 1.5rem;
+    width: 70%;
 }

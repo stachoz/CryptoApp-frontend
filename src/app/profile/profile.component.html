@@ -20,4 +20,19 @@
             </div>
         </div>
     </div>
+    <div class="wallet-value">
+        <div class="wallet-icon">
+            <i class="fa-solid fa-wallet"></i>
+        </div>
+        <div>
+            <p>{{ totalCoinsValue | currency:'USD':'symbol':'1.3'}}</p>
+        </div>
+    </div>
+    <div class="user-coins">
+        <h3>Your coins</h3>
+        <div class="coins">
+            <app-price-tracker [coinsFilter]="getUserCoinsNames()" [filtered]="true"
+             [coinsQuantity]="userCoins" (totalCoinsPriceEmitter)="getTotalCoinsPrice($event)"></app-price-tracker>
+        </div>
+    </div>
 </div>

@@ -16,6 +16,7 @@ import { PostComponent } from './post/post.component';
 import { HomeComponent } from './home/home.component';
 import { PostPageComponent } from './post-page/post-page.component';
 import { PaginationComponent } from './pagination/pagination.component';
+import { CoinListComponent } from './coin-list/coin-list.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { PaginationComponent } from './pagination/pagination.component';
     HomeComponent,
     PostPageComponent,
     PaginationComponent,
+    CoinListComponent,
   ],
   imports: [
     BrowserModule,
