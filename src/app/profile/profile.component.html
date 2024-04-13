@@ -30,6 +30,22 @@
     </div>
     <div class="user-coins">
         <h3>Your coins</h3>
+        <div class="add-coin-form">
+            <small *ngIf="coinFormErrorResponse.length != 0" class="error-message">{{coinFormErrorResponse}}</small>
+            <small *ngIf="symbol.invalid && (symbol.dirty || symbol.touched)" class="error-message">
+                <div *ngIf="symbol.errors?.['alreadyHaveCoin']">
+                    You already have this coin
+                </div>
+            </small>
+            <form [formGroup]="coinForm">
+                <label for="symbol">Symbol:</label> 
+                <input id="symbol" type="text" formControlName="symbol">
+
+                <label for="quantity">Quantity:</label>
+                <input type="number" id="quantity" formControlName="quantity" min="0">
+                <button type="submit" [disabled]="coinForm.invalid" (click)="onSubmit()">Add coin</button>
+            </form>
+        </div>
         <div class="coins">
             <app-price-tracker [coinsFilter]="getUserCoinsNames()" [filtered]="true"
              [coinsQuantity]="userCoins" (totalCoinsPriceEmitter)="getTotalCoinsPrice($event)"></app-price-tracker>

@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { UserService } from '../_services/user/user.service';
-import { User } from '../_models/User';
+import { FormBuilder, Validators } from '@angular/forms';
 import { passwordMatchValidator } from '../_helpers/password-match.directive';
 import { AuthService } from '../_services/auth/auth.service';
 import { Router } from '@angular/router';
@@ -58,6 +56,6 @@ export class RegisterComponent {
         });
     }
   }
-  
+
 
 }

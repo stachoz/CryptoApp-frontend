@@ -1,4 +1,4 @@
-import { Injectable, numberAttribute } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
@@ -21,5 +21,9 @@ export class CoinService {
       "username": username,
     }
     return this.http.get<UserCoin[]>(`${environment.apiUrl}/coins`, {params});
+  }
+
+  addUserCoin(symbol: string, quantity: number){
+    return this.http.post<any>(`${environment.apiUrl}/coins`, {symbol, quantity});
   }
 }

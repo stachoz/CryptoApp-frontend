@@ -3,8 +3,42 @@ p {
 }
 
 h3 {
-    margin-top: 0;
+    margin: 0;
     font-weight: 600;
+    padding: 1rem 0;
+}
+
+h4 {
+    margin: 0;
+}
+
+button {
+    background-color: #e0e0e0;
+    font-weight: 600;
+    border: none;
+    font-size: 0.9rem;
+    margin-left: 0.5rem;
+    border-radius: 1rem;
+    padding: 0.4rem;
+    color: black;
+}
+
+button:hover {
+    cursor: pointer;
+    background-color: grey;
+    color: white;
+}
+
+label {
+    margin-right: 0.5rem
+}
+
+input {
+    margin-right: 0.5rem;
+}
+
+form {
+    padding-top: 1.5rem;
 }
 
 .container {
@@ -72,13 +106,22 @@ h3 {
     font-size: 4rem;
 }
 
+.error-message {
+    position: absolute;
+}
+
+.add-coin-form {
+    display: flex;
+    justify-content: center;
+}
+
 .user-coins {
     padding: 0rem 2rem 1rem 2rem;
 }
 
 .coins {
     width: 50%;
-    margin: 0 auto;
+    margin: 1rem auto;
     background-color: whitesmoke;
     padding: 1rem;
     border-radius: 1.5rem;
