@@ -5,6 +5,7 @@ import { User } from '../_models/User';
 import { UserCoin } from '../_models/UserCoin';
 import { CoinService } from '../_services/coin/coin-service.service';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { BinanceService } from '../_services/binanceWebsocketApi/binance.service';
 
 @Component({
   selector: 'app-profile',
@@ -24,7 +25,7 @@ export class ProfileComponent implements OnInit {
 
 
   constructor(private userService:UserService, private authService:AuthService,
-    private coinService:CoinService, private fb:FormBuilder           
+    private coinService:CoinService, private fb:FormBuilder, private bianceService:BinanceService           
   ) {}
 
   ngOnInit(): void {
@@ -64,10 +65,12 @@ export class ProfileComponent implements OnInit {
   onSubmit(){
     const {symbol, quantity} = this.coinForm.value;
     if(symbol && quantity) {
-      this.coinService.addUserCoin(symbol, Number.parseFloat(quantity))
+      const quantityNumberValue = Number.parseFloat(quantity);
+      const upperCaseSymbol = symbol.toUpperCase();
+      this.coinService.addUserCoin(symbol, quantityNumberValue)
         .subscribe({
           next: () => {
-            this.loadUserCoins(this.user.username);
+            this.updateCoinList(upperCaseSymbol, quantityNumberValue);
             this.quantity.setValue('');
             this.symbol.setValue('');
           },
@@ -75,6 +78,14 @@ export class ProfileComponent implements OnInit {
             this.coinFormErrorResponse = error;
           }
         })
+    }
+  }
+
+  updateCoinList(symbol: string, quantity: number){
+    if(this.bianceService.isBeingSubscribed(symbol)){
+      this.userCoins.push(new UserCoin(symbol, quantity));
+    } else {
+      // implement subscribind to a new coin 
     }
   }
 

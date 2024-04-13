@@ -8,8 +8,8 @@ import { UserCoin } from '../_models/UserCoin';
   styleUrl: './price-tracker.component.css'
 })
 export class PriceTrackerComponent implements OnInit{
-  @Input() coinsFilter: string[] = [];
-  @Input() filtered: boolean = false;
+  @Input() coinsToTrack: string[] = [];
+  @Input() filtered: boolean = false; // set to false listen to all coins provided by Binance WebSocketApi
   @Input() coinsQuantity: UserCoin[] = [];
   @Output() totalCoinsPriceEmitter: EventEmitter<number> = new EventEmitter();
 
@@ -18,7 +18,7 @@ export class PriceTrackerComponent implements OnInit{
   constructor(private binanceService:BinanceService) {}
 
   ngOnInit(): void {
-    if(this.coinsFilter && this.filtered){
+    if(this.coinsToTrack && this.filtered){
       this.filteredWebsocketConnection();
     } else {
       this.websocketConnection();
@@ -47,7 +47,7 @@ export class PriceTrackerComponent implements OnInit{
   filteredWebsocketConnection() {
     this.subscribeToWebSocket((data: any) => {
       const symbol = data.s.replace('USDT', '');
-      if(this.coinsFilter.indexOf(symbol) !== -1) {
+      if(this.coinsToTrack.indexOf(symbol) !== -1) {
         const currentPice = data.w;
         this.coinsPrice.set(symbol, currentPice);
         this.totalCoinsValue();

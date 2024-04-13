@@ -47,7 +47,7 @@
             </form>
         </div>
         <div class="coins">
-            <app-price-tracker [coinsFilter]="getUserCoinsNames()" [filtered]="true"
+            <app-price-tracker [coinsToTrack]="getUserCoinsNames()" [filtered]="true"
              [coinsQuantity]="userCoins" (totalCoinsPriceEmitter)="getTotalCoinsPrice($event)"></app-price-tracker>
         </div>
     </div>
