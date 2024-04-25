@@ -9,7 +9,7 @@ export class BinanceService{
   private binanceWebSocketUrl:string = 'wss://stream.binance.com:9443/ws/';
   private ws:WebSocket | undefined;
   private wsSubject: ReplaySubject<WebSocket> = new ReplaySubject<WebSocket>(1);
-  private subsribedCoins: String[] = [];
+  private subscribedCoins: String[] = [];
   private avgPriceStreamName = 'usdt@avgPrice';
 
   constructor(private coinService:CoinService) { 
@@ -18,7 +18,7 @@ export class BinanceService{
 
   private connect(): void {
     this.coinService.getCoins().subscribe(coins => {
-      this.subsribedCoins = coins;
+      this.subscribedCoins = coins;
       let coinStreams = coins.map(coin => coin.toString().toLowerCase() + this.avgPriceStreamName).join('/');
       let webSocketUrl = this.binanceWebSocketUrl + coinStreams;
       console.log(webSocketUrl);
@@ -30,14 +30,16 @@ export class BinanceService{
     });
   }
 
-  subscribeToStream(coinSymbol: string){
+  subscribeToNewStream(coinSymbol: string){
     if(this.ws && this.ws.readyState == WebSocket.OPEN){
-      const subsciptionMessage = JSON.stringify({
+      const subscriptionMessage = JSON.stringify({
         method: 'SUBSCRIBE',
         params: [coinSymbol.toLowerCase() + this.avgPriceStreamName],
         id: 1
       });
-      this.ws.send(subsciptionMessage);
+      this.ws.send(subscriptionMessage);
+      console.log('message sended');
+      this.subscribedCoins.push(coinSymbol);
     } else {
       console.error('WebSocket connection is not open');
     }
@@ -54,6 +56,6 @@ export class BinanceService{
   }
 
   isBeingSubscribed(coinSymbol: string) : boolean {
-    return this.subsribedCoins.indexOf(coinSymbol) !== -1;
+    return this.subscribedCoins.indexOf(coinSymbol) !== -1;
   }
 }

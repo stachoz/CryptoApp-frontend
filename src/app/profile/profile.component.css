@@ -5,11 +5,10 @@ p {
 h3 {
     margin: 0;
     font-weight: 600;
-    padding: 1rem 0;
 }
 
 h4 {
-    margin: 0;
+    margin: 1rem 0 0 0;
 }
 
 button {
@@ -18,9 +17,8 @@ button {
     border: none;
     font-size: 0.9rem;
     margin-left: 0.5rem;
-    border-radius: 1rem;
-    padding: 0.4rem;
-    color: black;
+    border-radius: 60%;
+    padding: 1rem;
 }
 
 button:hover {
@@ -30,7 +28,7 @@ button:hover {
 }
 
 label {
-    margin-right: 0.5rem
+    margin: 0 0.5rem 0.3rem 0;
 }
 
 input {
@@ -39,6 +37,17 @@ input {
 
 form {
     padding-top: 1.5rem;
+    display: flex;
+}
+
+form div {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+form label {
+    font-size: 0.9rem;
 }
 
 .container {
@@ -57,7 +66,7 @@ form {
     border-radius: 1.5rem;
 }
 
-.icon {
+.user-icon {
     display: inline-block;
     font-size: 4rem;
     padding-right: 5rem;
@@ -91,17 +100,29 @@ form {
     border: 1px solid black;
 }
 
-.wallet-value {
+.wallet-stats-container {
+    display: flex;
+}
+
+.wallet-stats-container .wallet-stats:last-child {
+    padding-right: 2rem;
+}
+
+.wallet-stats {
     display: flex;
     align-items: center;
 }
 
-.wallet-value > div > p {
+.wallet-stats > div > p {
     font-size: 2rem;
     font-weight: 600;
 }
 
-.wallet-icon {
+.wallet-stats-label {
+    font-size: 0.8rem;
+}
+
+.icon  {
     padding: 2rem;
     font-size: 4rem;
 }
@@ -125,5 +146,5 @@ form {
     background-color: whitesmoke;
     padding: 1rem;
     border-radius: 1.5rem;
-    width: 70%;
+    width: 80%;
 }

@@ -4,16 +4,20 @@
             <div class="coin-name">{{coin[0]}}:</div>
             <div class="coin-price">{{coin[1] | currency:'USD':'symbol': '1.3'}}</div>
         </div>
-        <div class="info" *ngIf="coinsQuantity.length != 0">
-            <div class="quantity">
-                <div class="quantity-name">Quantity:</div>
-                <div>{{getCoinQuantity(coin[0])}}</div>
+        <div class="info" *ngIf="coinsInformation.length != 0">
+            <div class="info-element">
+                <label>quantity</label>
+                <div class="info-value">{{getCoinTotalAmount(coin[0])}}</div>
             </div>
-            <div class="total-coin-value">
-                <div class="total-coin-value-name">Total Coin Value:</div>
-                <div>
-                    {{countTotalCoinValue(getCoinQuantity(coin[0]), coin[1]) | currency:'USD':'symbol':'1.1'}}
+            <div class="info-element">
+                <label>Total Coin Value</label>
+                <div class="info-value">
+                    {{countTotalCoinValue(getCoinTotalAmount(coin[0]), coin[1]) | currency:'USD':'symbol':'1.1'}}
                 </div>
+            </div>
+            <div class="info-element">
+                <label>roi</label>
+                <div class="info-value">{{getCoinRoi(coin[0]) | currency:'USD':'symbol':'1.1'}}</div>
             </div>
         </div>
     </div>

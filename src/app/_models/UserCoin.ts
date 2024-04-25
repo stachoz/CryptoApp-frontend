@@ -1,9 +1,11 @@
 export class UserCoin {
     symbol!: string;
-    quantity!: number;
+    totalAmount!: number;
+    roi!: number;
 
-    constructor(symbol: string, quantity: number){
+    constructor(symbol: string, totalAmount: number, roi: number){
         this.symbol = symbol;
-        this.quantity = quantity;
+        this.totalAmount = totalAmount;
+        this.roi = roi;
     }
 }

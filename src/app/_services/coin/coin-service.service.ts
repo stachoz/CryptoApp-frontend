@@ -16,14 +16,11 @@ export class CoinService {
     return this.http.get<string[]>(`${environment.apiUrl}/coins`);
   }
 
-  getUserCoins(username: string) {
-    const params = {
-      "username": username,
-    }
-    return this.http.get<UserCoin[]>(`${environment.apiUrl}/coins`, {params});
+  getUserCoins() {
+    return this.http.get<UserCoin[]>(`${environment.apiUrl}/wallet`);
   }
 
-  addUserCoin(symbol: string, quantity: number){
-    return this.http.post<any>(`${environment.apiUrl}/coins`, {symbol, quantity});
+  addUserCoin(symbol: string, price: number, quantity: number, type: string){
+    return this.http.post<any>(`${environment.apiUrl}/wallet/transactions`, {symbol, price, quantity, type});
   }
-}
+}   

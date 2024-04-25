@@ -4,7 +4,7 @@ import { AuthService } from '../_services/auth/auth.service';
 import { User } from '../_models/User';
 import { UserCoin } from '../_models/UserCoin';
 import { CoinService } from '../_services/coin/coin-service.service';
-import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { BinanceService } from '../_services/binanceWebsocketApi/binance.service';
 
 @Component({
@@ -15,12 +15,13 @@ import { BinanceService } from '../_services/binanceWebsocketApi/binance.service
 export class ProfileComponent implements OnInit {
   user!: User;
   userCoins: UserCoin[] = [];
-  totalCoinsValue: number = 0;
   coinFormErrorResponse: string = "";
-  showFrom: boolean = false;
-  coinForm = this.fb.group({
+  walletValue: number = 0;
+  transactionForm = this.fb.group({
     symbol: ['', [Validators.required]],
-    quantity: ['', Validators.required]
+    price: ['', [Validators.required, Validators.min(0)]],
+    quantity: ['', [Validators.required, Validators.min(0)]],
+    transactionType: ['BUY', [Validators.required]]
   });
 
 
@@ -36,43 +37,27 @@ export class ProfileComponent implements OnInit {
           this.user = user[0];
         }
       );
-      this.loadUserCoins(credentials.username);
+      this.loadUserCoins();
     }
-    this.coinForm.get('symbol')?.setValidators([Validators.required, this.validateSymbol.bind(this)]);
-    this.coinForm.get('symbol')?.updateValueAndValidity();
   }
 
-  getUserCoinsNames() : string[] {
-    return Array.from(new Set(this.userCoins.map(userCoin => userCoin.symbol)));
-  }
-
-  getTotalCoinsPrice(value: number){
-    this.totalCoinsValue = value;
-  }
-
-  loadUserCoins(username: string) {
-    this.coinService.getUserCoins(username).subscribe(
+  loadUserCoins() {
+    this.coinService.getUserCoins().subscribe(
       userCoins => {
         this.userCoins = userCoins;
       }
     )
   }
 
-  toggleForm(){
-    this.showFrom = !this.showFrom;
-  }
-
   onSubmit(){
-    const {symbol, quantity} = this.coinForm.value;
-    if(symbol && quantity) {
-      const quantityNumberValue = Number.parseFloat(quantity);
-      const upperCaseSymbol = symbol.toUpperCase();
-      this.coinService.addUserCoin(symbol, quantityNumberValue)
+    const {symbol, price, quantity, transactionType} = this.transactionForm.value;
+    if(symbol && price && quantity && transactionType) {
+      this.transactionForm.reset();
+      this.transactionForm.controls["transactionType"].setValue("BUY");
+      this.coinService.addUserCoin(symbol.toUpperCase(), Number.parseFloat(price), Number.parseFloat(quantity), transactionType)
         .subscribe({
-          next: () => {
-            this.updateCoinList(upperCaseSymbol, quantityNumberValue);
-            this.quantity.setValue('');
-            this.symbol.setValue('');
+          next: (reponse) => {
+            this.updateCoinList(reponse.symbol, reponse.totalAmount, reponse.roi)
           },
           error: (error) => {
             this.coinFormErrorResponse = error;
@@ -81,25 +66,42 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-  updateCoinList(symbol: string, quantity: number){
-    if(this.bianceService.isBeingSubscribed(symbol)){
-      this.userCoins.push(new UserCoin(symbol, quantity));
+  updateCoinList(symbol: string, totalAmount: number, roi: number){
+    if(!this.bianceService.isBeingSubscribed(symbol)){
+      this.bianceService.subscribeToNewStream(symbol);
+      this.userCoins.push(new UserCoin(symbol, totalAmount, roi));
+    } 
+    const existingCoinIndex = this.userCoins.findIndex(coin => coin.symbol === symbol);
+    if(existingCoinIndex !== -1){
+      const coinToUpdate = this.userCoins[existingCoinIndex];
+      coinToUpdate.roi = roi;
+      coinToUpdate.totalAmount = totalAmount;
     } else {
-      // implement subscribind to a new coin 
+      this.userCoins.push({
+        symbol: symbol.toUpperCase(),
+        roi: roi,
+        totalAmount: totalAmount
+      });
     }
   }
 
+  getUserCoinsNames() : string[] {
+    return Array.from(new Set(this.userCoins.map(userCoin => userCoin.symbol)));
+  }
+
+  getWalletValueFromEvent(value: number){
+    this.walletValue = value;
+  }
+
+  countSummarizedRoi() : number {
+    return this.userCoins.reduce((acc, coin) => acc + coin.roi, 0);
+  }
+
   get quantity(){
-    return this.coinForm.controls['quantity'];
+    return this.transactionForm.controls['quantity'];
   }
 
   get symbol(){
-    return this.coinForm.controls['symbol'];
-  }
-
-  validateSymbol(control: AbstractControl): ValidationErrors | null {
-    const symbol = control.value;
-    const symbolExists = this.userCoins.some(coin => coin.symbol.toLowerCase() === symbol.toLowerCase());
-    return symbolExists ? {alreadyHaveCoin: true} : null;
+    return this.transactionForm.controls['symbol'];
   }
 }
