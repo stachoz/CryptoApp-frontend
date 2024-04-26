@@ -2,7 +2,7 @@
     <div *ngFor="let coin of coinDataArray()" class="coin-wrapper">
         <div class="name-price">
             <div class="coin-name">{{coin[0]}}:</div>
-            <div class="coin-price">{{coin[1] | currency:'USD':'symbol': '1.3'}}</div>
+            <div class="coin-price">{{coin[1] | dynamicCurrencyPrecision }}</div>
         </div>
         <div class="info" *ngIf="coinsInformation.length != 0">
             <div class="info-element">
@@ -12,12 +12,12 @@
             <div class="info-element">
                 <label>Total Coin Value</label>
                 <div class="info-value">
-                    {{countTotalCoinValue(getCoinTotalAmount(coin[0]), coin[1]) | currency:'USD':'symbol':'1.1'}}
+                    {{countTotalCoinValue(getCoinTotalAmount(coin[0]), coin[1]) | dynamicCurrencyPrecision}}
                 </div>
             </div>
             <div class="info-element">
                 <label>roi</label>
-                <div class="info-value">{{getCoinRoi(coin[0]) | currency:'USD':'symbol':'1.1'}}</div>
+                <div class="info-value">{{getCoinRoi(coin[0]) | currency: 'USD':'symbol'}}</div>
             </div>
         </div>
     </div>
