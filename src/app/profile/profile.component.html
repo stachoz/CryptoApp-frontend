@@ -78,4 +78,5 @@
              [coinsInformation]="userCoins" (totalCoinsPriceEmitter)="getWalletValueFromEvent($event)"></app-price-tracker>
         </div>
     </div>
+    <app-transaction-history [transactions]="lastCoinsTransactions"></app-transaction-history>
 </div>

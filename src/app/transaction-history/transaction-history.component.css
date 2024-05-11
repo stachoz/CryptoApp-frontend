@@ -1,0 +1,60 @@
+.container {
+    width: 40%;
+    margin: 0 auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 2rem;
+    position: relative;
+}
+
+th, td {
+    padding: 1rem;
+    text-align: center;
+    border-bottom: 1px solid black;
+}
+
+th {
+    font-size: 1rem;
+    padding: 1rem 0.5rem;
+}
+
+td {
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+.info-box {
+    display: none;
+    position: absolute;
+    top: -1rem;
+    font-size: 0.8rem;
+    font-weight: 400;
+}
+
+.info-icon-box:hover + .info-box{
+    display: block;
+}
+
+.info-icon-box:hover {
+    cursor: pointer;
+}
+
+.actions {
+    display: flex;
+    justify-content: space-around;
+}
+
+.actions i:hover{
+    cursor: pointer;
+}
+
+.red {
+    color: red;
+}
+
+.green {
+    color: green;
+}

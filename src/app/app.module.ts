@@ -17,6 +17,7 @@ import { HomeComponent } from './home/home.component';
 import { PostPageComponent } from './post-page/post-page.component';
 import { PaginationComponent } from './pagination/pagination.component';
 import { DynamicCurrencyPrecisionPipe } from './_helpers/dynamic-currency-precision.pipe';
+import { TransactionHistoryComponent } from './transaction-history/transaction-history.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { DynamicCurrencyPrecisionPipe } from './_helpers/dynamic-currency-precis
     HomeComponent,
     PostPageComponent,
     PaginationComponent,
-    DynamicCurrencyPrecisionPipe
+    DynamicCurrencyPrecisionPipe,
+    TransactionHistoryComponent
   ],
   imports: [
     BrowserModule,

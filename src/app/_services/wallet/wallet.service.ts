@@ -2,12 +2,12 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
-import { UserCoin } from '../../_models/UserCoin';
+import { Transaction } from '../../_models/Transaction';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CoinService {
+export class WalletService {
   private coinData: Map<string, number> = new Map();
 
   constructor(private http:HttpClient) { }
@@ -16,8 +16,8 @@ export class CoinService {
     return this.http.get<string[]>(`${environment.apiUrl}/coins`);
   }
 
-  getUserCoins() {
-    return this.http.get<UserCoin[]>(`${environment.apiUrl}/wallet`);
+  getUserLastTransactionOnUniqueCoins() {
+    return this.http.get<Transaction[]>(`${environment.apiUrl}/wallet/transactions/lastOnUniqueCoins`);
   }
 
   addUserCoin(symbol: string, price: number, quantity: number, type: string){

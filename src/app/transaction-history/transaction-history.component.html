@@ -1,0 +1,40 @@
+<h3>Last transactions on your coins</h3>
+<table>
+    <tr>
+        <th>Coin</th>
+        <th>Quantity</th>
+        <th>Type</th>
+        <th>Price</th>
+        <th>
+            Roi AT
+            <span class="info-icon-box">
+                <i class="fa-solid fa-circle-info"></i>
+            </span>
+            <div class="info-box">calculated roi on coin after this transaction</div>
+        </th>
+        <th>
+            Amount AT
+            <span class="info-icon-box">
+                <i class="fa-solid fa-circle-info"></i>
+            </span>
+            <div class="info-box">amount of coin you have after transaction</div>
+        </th>
+        <th>Date</th>
+        <th>Action</th>
+    </tr>
+    <tr *ngFor="let transaction of transactions">
+        <td>{{transaction.symbol}}</td>
+        <td>{{transaction.quantity}}</td>
+        <td [ngClass]="{'green': transaction.type === 'BUY', 'red': transaction.type === 'SELL'}">{{transaction.type}}</td>
+        <td>{{transaction.price | dynamicCurrencyPrecision}}</td>
+        <td>{{transaction.roi | currency}}</td>
+        <td>{{transaction.totalAmount}}</td>
+        <td>{{transaction.date | date: 'dd-MM-yyyy HH:mm'}}</td>
+        <td>
+            <div class="actions">
+                <i class="fa-solid fa-pen-to-square"></i>
+                <i class="fa-solid fa-trash"></i>
+            </div>
+        </td>
+    </tr>
+</table>

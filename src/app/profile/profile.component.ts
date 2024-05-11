@@ -3,9 +3,10 @@ import { UserService } from '../_services/user/user.service';
 import { AuthService } from '../_services/auth/auth.service';
 import { User } from '../_models/User';
 import { UserCoin } from '../_models/UserCoin';
-import { CoinService } from '../_services/coin/coin-service.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import { BinanceService } from '../_services/binanceWebsocketApi/binance.service';
+import { WalletService } from '../_services/wallet/wallet.service';
+import { Transaction } from '../_models/Transaction';
 
 @Component({
   selector: 'app-profile',
@@ -15,6 +16,7 @@ import { BinanceService } from '../_services/binanceWebsocketApi/binance.service
 export class ProfileComponent implements OnInit {
   user!: User;
   userCoins: UserCoin[] = [];
+  lastCoinsTransactions: Transaction[] = [];
   coinFormErrorResponse: string = "";
   walletValue: number = 0;
   transactionForm = this.fb.group({
@@ -26,7 +28,7 @@ export class ProfileComponent implements OnInit {
 
 
   constructor(private userService:UserService, private authService:AuthService,
-    private coinService:CoinService, private fb:FormBuilder, private bianceService:BinanceService           
+    private walletService:WalletService, private fb:FormBuilder, private bianceService:BinanceService           
   ) {}
 
   ngOnInit(): void {
@@ -37,14 +39,15 @@ export class ProfileComponent implements OnInit {
           this.user = user[0];
         }
       );
-      this.loadUserCoins();
+      this.getLastTransactionsOnUniqueCoins();
     }
   }
 
-  loadUserCoins() {
-    this.coinService.getUserCoins().subscribe(
-      userCoins => {
-        this.userCoins = userCoins;
+  getLastTransactionsOnUniqueCoins(): void{
+    this.walletService.getUserLastTransactionOnUniqueCoins().subscribe(
+      lastCoinsTransactions => {
+        this.lastCoinsTransactions = lastCoinsTransactions;
+        this.userCoins = lastCoinsTransactions.map(transaction => new UserCoin(transaction.symbol, transaction.totalAmount, transaction.roi));
       }
     )
   }
@@ -54,10 +57,10 @@ export class ProfileComponent implements OnInit {
     if(symbol && price && quantity && transactionType) {
       this.transactionForm.reset();
       this.transactionForm.controls["transactionType"].setValue("BUY");
-      this.coinService.addUserCoin(symbol.toUpperCase(), Number.parseFloat(price), Number.parseFloat(quantity), transactionType)
+      this.walletService.addUserCoin(symbol.toUpperCase(), Number.parseFloat(price), Number.parseFloat(quantity), transactionType)
         .subscribe({
           next: (reponse) => {
-            this.updateCoinList(reponse.symbol, reponse.totalAmount, reponse.roi)
+            this.getLastTransactionsOnUniqueCoins();
           },
           error: (error) => {
             this.coinFormErrorResponse = error;

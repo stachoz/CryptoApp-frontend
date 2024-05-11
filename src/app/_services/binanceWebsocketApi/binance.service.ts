@@ -1,6 +1,6 @@
 import { Injectable} from '@angular/core';
-import { CoinService } from '../coin/coin-service.service';
 import { Observable, ReplaySubject, filter } from 'rxjs';
+import { WalletService } from '../wallet/wallet.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,12 +12,12 @@ export class BinanceService{
   private subscribedCoins: String[] = [];
   private avgPriceStreamName = 'usdt@avgPrice';
 
-  constructor(private coinService:CoinService) { 
+  constructor(private walletService:WalletService) { 
     this.connect();
   }
 
   private connect(): void {
-    this.coinService.getCoins().subscribe(coins => {
+    this.walletService.getCoins().subscribe(coins => {
       this.subscribedCoins = coins;
       let coinStreams = coins.map(coin => coin.toString().toLowerCase() + this.avgPriceStreamName).join('/');
       let webSocketUrl = this.binanceWebSocketUrl + coinStreams;
