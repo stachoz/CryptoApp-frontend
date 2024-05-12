@@ -26,6 +26,14 @@ td {
     font-size: 0.9rem;
 }
 
+.red {
+    color: red;
+}
+
+.green {
+    color: green;
+}
+
 .info-box {
     display: none;
     position: absolute;
@@ -51,10 +59,10 @@ td {
     cursor: pointer;
 }
 
-.red {
-    color: red;
+.delete-icon, .edit-icon {
+    font-size: 1rem;
 }
 
-.green {
-    color: green;
+.delete-icon:hover {
+    color: red;
 }

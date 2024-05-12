@@ -1,4 +1,4 @@
-import { Component, OnInit, createEnvironmentInjector } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UserService } from '../_services/user/user.service';
 import { AuthService } from '../_services/auth/auth.service';
 import { User } from '../_models/User';
@@ -28,7 +28,7 @@ export class ProfileComponent implements OnInit {
 
 
   constructor(private userService:UserService, private authService:AuthService,
-    private walletService:WalletService, private fb:FormBuilder, private bianceService:BinanceService           
+    private walletService:WalletService, private fb:FormBuilder, private bianceService:BinanceService
   ) {}
 
   ngOnInit(): void {
@@ -57,38 +57,29 @@ export class ProfileComponent implements OnInit {
     if(symbol && price && quantity && transactionType) {
       this.transactionForm.reset();
       this.transactionForm.controls["transactionType"].setValue("BUY");
-      this.walletService.addUserCoin(symbol.toUpperCase(), Number.parseFloat(price), Number.parseFloat(quantity), transactionType)
+      this.walletService.addUserCoin(symbol.toUpperCase().trim(), Number.parseFloat(price), Number.parseFloat(quantity), transactionType)
         .subscribe({
           next: (reponse) => {
+            console.log(reponse);
+            this.coinFormErrorResponse = "";
             this.getLastTransactionsOnUniqueCoins();
+            this.bianceService.subscribeToNewStream(symbol);
           },
           error: (error) => {
+            console.log(error);
             this.coinFormErrorResponse = error;
           }
         })
     }
   }
 
-  updateCoinList(symbol: string, totalAmount: number, roi: number){
-    if(!this.bianceService.isBeingSubscribed(symbol)){
-      this.bianceService.subscribeToNewStream(symbol);
-      this.userCoins.push(new UserCoin(symbol, totalAmount, roi));
-    } 
-    const existingCoinIndex = this.userCoins.findIndex(coin => coin.symbol === symbol);
-    if(existingCoinIndex !== -1){
-      const coinToUpdate = this.userCoins[existingCoinIndex];
-      coinToUpdate.roi = roi;
-      coinToUpdate.totalAmount = totalAmount;
-    } else {
-      this.userCoins.push({
-        symbol: symbol.toUpperCase(),
-        roi: roi,
-        totalAmount: totalAmount
-      });
-    }
+  handleDeletedTransaction(deletedCoinSymbol: string) {
+    this.userCoins = this.userCoins.filter(coin => coin.symbol !== deletedCoinSymbol);
+    if(this.userCoins.length === 0) this.walletValue = 0;
+    this.getLastTransactionsOnUniqueCoins();
   }
 
-  getUserCoinsNames() : string[] {
+  getUserCoinsNames() {
     return Array.from(new Set(this.userCoins.map(userCoin => userCoin.symbol)));
   }
 

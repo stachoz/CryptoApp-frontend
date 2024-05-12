@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { BinanceService } from '../_services/binanceWebsocketApi/binance.service';
 import { UserCoin } from '../_models/UserCoin';
 
@@ -8,35 +8,27 @@ import { UserCoin } from '../_models/UserCoin';
   styleUrl: './price-tracker.component.css'
 })
 export class PriceTrackerComponent implements OnInit{
-  @Input() coinsToTrack: string[] = [];
   @Input() coinsInformation: UserCoin[] = [];
-  @Output() totalCoinsPriceEmitter: EventEmitter<number> = new EventEmitter();
+  @Output() totalCoinsActualValueEmitter: EventEmitter<number> = new EventEmitter<number>();
 
   private coinsPrice:Map<string, number> = new Map();
 
   constructor(private binanceService:BinanceService) {}
 
   ngOnInit(): void {
-    if(this.coinsToTrack.length > 0){
-      this.filteredWebsocketConnection();
-    } else {
-      this.websocketConnection();
-    }
+    this.initializeWebSocket();
   }
 
-  websocketConnection() {
-    this.subscribeToWebSocket((data: any) => {
-      const currentPrice = data.w;
-      const symbol = data.s.replace('USDT', '');
-      this.coinsPrice.set(symbol, currentPrice);
-    })
+
+  private initializeWebSocket(): void {
+    this.filteredWebsocketConnection();
   }
 
-  filteredWebsocketConnection() {
+  private filteredWebsocketConnection() {
     this.subscribeToWebSocket((data: any) => {
       if(data.s){
         const symbol = data.s.replace('USDT', '');
-        if(this.coinsToTrack.indexOf(symbol) !== -1) {
+        if(this.coinsInformation.find(coin => coin.symbol === symbol)) {
           const currentPrice = data.w;
           this.coinsPrice.set(symbol, currentPrice);
           this.totalWalletValue();
@@ -53,7 +45,7 @@ export class PriceTrackerComponent implements OnInit{
       }
     })
   }
-
+  
   coinDataArray(): [string, number][] {
     return Array.from(this.coinsPrice.entries());
   }
@@ -72,12 +64,19 @@ export class PriceTrackerComponent implements OnInit{
     return quantity * price;
   }
 
-  totalWalletValue(){ 
+  coinPriceByName(symbol: string){
+    const price = this.coinsPrice.get(symbol);
+    return price !== undefined ? price : 0;
+  }
+
+  totalWalletValue(){
     let totalValue = 0;
-    this.coinsPrice.forEach((price, symbol) => {
-      const quantity = this.getCoinTotalAmount(symbol);
-      totalValue += price * quantity;
-    });
-    this.totalCoinsPriceEmitter.emit(totalValue);
+    this.coinsInformation.forEach(coin => {
+      const quantity = this.getCoinTotalAmount(coin.symbol);
+      const priceOptional = this.coinsPrice.get(coin.symbol);
+      const price = priceOptional !== undefined ? priceOptional : 0;
+      totalValue += this.countTotalCoinValue(quantity, price);
+    })
+    this.totalCoinsActualValueEmitter.emit(totalValue);
   }
 }

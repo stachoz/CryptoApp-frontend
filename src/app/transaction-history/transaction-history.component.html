@@ -32,8 +32,12 @@
         <td>{{transaction.date | date: 'dd-MM-yyyy HH:mm'}}</td>
         <td>
             <div class="actions">
-                <i class="fa-solid fa-pen-to-square"></i>
-                <i class="fa-solid fa-trash"></i>
+                <div class="edit-icon">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                </div>
+                <div class="delete-icon" (click)="deleteCoinByName(transaction.symbol)">
+                    <i class="fa-solid fa-trash"></i>
+                </div>
             </div>
         </td>
     </tr>

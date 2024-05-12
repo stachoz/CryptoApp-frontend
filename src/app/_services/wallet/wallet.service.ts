@@ -23,4 +23,8 @@ export class WalletService {
   addUserCoin(symbol: string, price: number, quantity: number, type: string){
     return this.http.post<any>(`${environment.apiUrl}/wallet/transactions`, {symbol, price, quantity, type});
   }
+
+  deleteLastTransactionOnCoin(symbol: string){
+    return this.http.delete<any>(`${environment.apiUrl}/wallet/transactions/lastOnUniqueCoins/${symbol}`);
+  }
 }   

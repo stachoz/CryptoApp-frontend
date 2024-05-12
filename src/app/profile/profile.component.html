@@ -74,9 +74,12 @@
             </form>
         </div>
         <div class="coins" *ngIf="userCoins.length > 0">
-            <app-price-tracker [coinsToTrack]="getUserCoinsNames()"
-             [coinsInformation]="userCoins" (totalCoinsPriceEmitter)="getWalletValueFromEvent($event)"></app-price-tracker>
+            <app-price-tracker (totalCoinsActualValueEmitter)="getWalletValueFromEvent($event)"
+             [coinsInformation]="userCoins"></app-price-tracker>
         </div>
     </div>
-    <app-transaction-history [transactions]="lastCoinsTransactions"></app-transaction-history>
+    <app-transaction-history 
+        [transactions]="lastCoinsTransactions"
+        (transactionDeleted)="handleDeletedTransaction($event)"
+    ></app-transaction-history>
 </div>

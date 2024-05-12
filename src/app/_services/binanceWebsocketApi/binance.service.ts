@@ -31,17 +31,19 @@ export class BinanceService{
   }
 
   subscribeToNewStream(coinSymbol: string){
-    if(this.ws && this.ws.readyState == WebSocket.OPEN){
-      const subscriptionMessage = JSON.stringify({
-        method: 'SUBSCRIBE',
-        params: [coinSymbol.toLowerCase() + this.avgPriceStreamName],
-        id: 1
-      });
-      this.ws.send(subscriptionMessage);
-      console.log('message sended');
-      this.subscribedCoins.push(coinSymbol);
-    } else {
-      console.error('WebSocket connection is not open');
+    if(!this.isBeingSubscribed(coinSymbol)){
+      if(this.ws && this.ws.readyState == WebSocket.OPEN){
+        const subscriptionMessage = JSON.stringify({
+          method: 'SUBSCRIBE',
+          params: [coinSymbol.toLowerCase() + this.avgPriceStreamName],
+          id: 1
+        });
+        this.ws.send(subscriptionMessage);
+        console.log('message sended');
+        this.subscribedCoins.push(coinSymbol);
+      } else {
+        console.error('WebSocket connection is not open');
+      }
     }
   }
 
@@ -56,6 +58,6 @@ export class BinanceService{
   }
 
   isBeingSubscribed(coinSymbol: string) : boolean {
-    return this.subscribedCoins.indexOf(coinSymbol) !== -1;
+    return this.subscribedCoins.indexOf(coinSymbol.toUpperCase()) !== -1;
   }
 }
