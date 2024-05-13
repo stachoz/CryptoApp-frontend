@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, createNgModule } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, map } from 'rxjs';
-import { User } from '../../_models/User';
 import { UserCredentails } from '../../_models/UserCredentials';
 import { environment } from '../../../environments/environment';
 import { LoginResponse } from '../../_models/LoginResponse';
@@ -20,7 +19,7 @@ export class AuthService {
   }
 
   registerUser(username: string, email: string, password: string) {
-    return this.http.post<User>(`${environment.apiUrl}/auth/register`, {username, email, password});
+    return this.http.post<any>(`${environment.apiUrl}/auth/register`, {username, email, password});
   }
 
   login(username:string, password: string){

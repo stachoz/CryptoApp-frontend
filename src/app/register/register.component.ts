@@ -50,8 +50,8 @@ export class RegisterComponent {
           next: () => {
             this.router.navigateByUrl('/login');
           },
-          error: (error) => {
-            this.errorsResponse = error.error.errors;
+          error: (err) => {
+            this.errorsResponse = err.errors;
           }
         });
     }
