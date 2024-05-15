@@ -10,6 +10,8 @@ import { WalletService } from '../_services/wallet/wallet.service';
 export class TransactionHistoryComponent {
   @Input() transactions:Transaction[] = [];
   @Output() transactionDeleted: EventEmitter<string> = new EventEmitter<string>();
+  @Output() transactionUpdated: EventEmitter<void> = new EventEmitter<void>();
+  transactionToEdit?:Transaction;
 
   constructor(private walletService:WalletService) {}
 
@@ -24,5 +26,14 @@ export class TransactionHistoryComponent {
         }
       }
     )
+  }
+
+  showTransactionEditForm(transaction:Transaction){
+    this.transactionToEdit = transaction;
+    console.log(this.transactionToEdit);
+  }
+
+  hideTransactionEditForm(){
+    this.transactionToEdit = undefined;
   }
 }

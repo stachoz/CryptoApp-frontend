@@ -67,7 +67,7 @@ export class ProfileComponent implements OnInit {
           },
           error: (error) => {
             console.log(error);
-            this.coinFormErrorResponse = error;
+            this.coinFormErrorResponse = error.message;
           }
         })
     }

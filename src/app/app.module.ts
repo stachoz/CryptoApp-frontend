@@ -18,6 +18,7 @@ import { PostPageComponent } from './post-page/post-page.component';
 import { PaginationComponent } from './pagination/pagination.component';
 import { DynamicCurrencyPrecisionPipe } from './_helpers/dynamic-currency-precision.pipe';
 import { TransactionHistoryComponent } from './transaction-history/transaction-history.component';
+import { EditTransactionFormComponent } from './edit-transaction-form/edit-transaction-form.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { TransactionHistoryComponent } from './transaction-history/transaction-h
     PostPageComponent,
     PaginationComponent,
     DynamicCurrencyPrecisionPipe,
-    TransactionHistoryComponent
+    TransactionHistoryComponent,
+    EditTransactionFormComponent
   ],
   imports: [
     BrowserModule,

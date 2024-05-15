@@ -1,0 +1,49 @@
+<div class="modal-background" *ngIf="showForm">
+</div>
+<div class="container" *ngIf="showForm">
+    <form [formGroup]="editTransactionForm" (ngSubmit)="onSubmit()">
+        <div class="icons-container">
+            <div class="close-icon" (click)="closeForm()">
+                <i class="fa-solid fa-xmark"></i>
+            </div>
+        </div>
+        <div class="response-error" *ngIf="formErrorResponse.length != 0">
+            <small class="error-message">{{formErrorResponse}}</small>
+        </div>
+        <div class="line">
+            <div class="form-group">
+                <label for="symbol">Symbol:</label>
+                <input type="text" id="symbol" formControlName="symbol">
+                <small *ngIf="symbol.invalid && (symbol.dirty || symbol.touched)">
+                    <div *ngIf="symbol.errors?.['required']">Coin symbol is required</div>
+                    <div *ngIf="symbol.errors?.['maxlength']">Coin symbol is too long</div>
+                    <div *ngIf="symbol.errors?.['minlength']">Coin symbol is too short</div>
+                </small>
+            </div>
+            <div class="form-group">
+                <label for="price">Price:</label>
+                <input type="number" step="0.1" id="price" formControlName="price">
+                <small *ngIf="price.invalid && (price.dirty || price.touched)">
+                    <div *ngIf="price.errors?.['required']">Price is required</div>
+                    <div *ngIf="price.errors?.['min']">Price is too small</div>
+                </small>
+            </div>
+            <div class="form-group">
+                <label for="quantity">Quantity:</label>
+                <input type="number" step="0.1" id="quantity" formControlName="quantity">
+                <small *ngIf="quantity.invalid && (quantity.dirty || quantity.touched)">
+                    <div *ngIf="quantity.errors?.['required']">Quantity is required</div>
+                    <div *ngIf="quantity.errors?.['min']">Quantity is too small</div>
+                </small>
+            </div>
+            <div class="form-group">
+                <label for="transactionType">Transaction Type:</label>
+                <select id="transactionType" formControlName="transactionType">
+                    <option value="BUY" selected>Buy</option>
+                    <option value="SELL">Sell</option>
+                </select>
+            </div>
+        </div>
+        <button type="submit" [disabled]="editTransactionForm.invalid">Save Changes</button>
+    </form>
+</div>

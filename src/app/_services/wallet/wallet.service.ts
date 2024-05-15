@@ -17,7 +17,7 @@ export class WalletService {
   }
 
   getUserLastTransactionOnUniqueCoins() {
-    return this.http.get<Transaction[]>(`${environment.apiUrl}/wallet/transactions/lastOnUniqueCoins`);
+    return this.http.get<Transaction[]>(`${environment.apiUrl}/wallet/transactions/lastOnCoins`);
   }
 
   addUserCoin(symbol: string, price: number, quantity: number, type: string){
@@ -25,6 +25,10 @@ export class WalletService {
   }
 
   deleteLastTransactionOnCoin(symbol: string){
-    return this.http.delete<any>(`${environment.apiUrl}/wallet/transactions/lastOnUniqueCoins/${symbol}`);
+    return this.http.delete<any>(`${environment.apiUrl}/wallet/transactions/lastOnCoins/${symbol}`);
+  }
+
+  updateLastTransactionOnCoin(symbol: string, price: number, quantity: number, type: string){
+    return this.http.put<any>(`${environment}/wallet/transactions/lastOnCoins`, {symbol, price, quantity, type});
   }
 }   

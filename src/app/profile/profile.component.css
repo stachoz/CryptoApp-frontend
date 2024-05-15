@@ -148,3 +148,7 @@ form label {
     border-radius: 1.5rem;
     width: 80%;
 }
+
+.blurred {
+    filter: blur(1px);
+}
