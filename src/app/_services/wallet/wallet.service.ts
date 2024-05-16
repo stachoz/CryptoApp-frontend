@@ -28,7 +28,7 @@ export class WalletService {
     return this.http.delete<any>(`${environment.apiUrl}/wallet/transactions/lastOnCoins/${symbol}`);
   }
 
-  updateLastTransactionOnCoin(symbol: string, price: number, quantity: number, type: string){
-    return this.http.put<any>(`${environment}/wallet/transactions/lastOnCoins`, {symbol, price, quantity, type});
+  updateLastTransactionOnCoin(symbol: string, price: number, quantity: number, type: string, updatingCoinSymbol: string){
+    return this.http.put<any>(`${environment.apiUrl}/wallet/transactions/lastOnCoins/${updatingCoinSymbol}`, {symbol, price, quantity, type});
   }
 }   

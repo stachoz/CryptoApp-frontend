@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Transaction } from '../_models/Transaction';
 import { WalletService } from '../_services/wallet/wallet.service';
 
@@ -35,5 +35,9 @@ export class TransactionHistoryComponent {
 
   hideTransactionEditForm(){
     this.transactionToEdit = undefined;
+  }
+
+  passTransactionUpdated(){
+    this.transactionUpdated.emit();
   }
 }

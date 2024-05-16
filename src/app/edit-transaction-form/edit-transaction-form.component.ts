@@ -36,10 +36,9 @@ export class EditTransactionFormComponent implements OnInit{
   onSubmit(){
     const {symbol, price, quantity, transactionType} = this.editTransactionForm.value;
     if(symbol && price && quantity && transactionType) {
-
-      this.walletService.addUserCoin(symbol.toUpperCase().trim(), Number.parseFloat(price), Number.parseFloat(quantity), transactionType)
+      this.walletService.updateLastTransactionOnCoin(symbol.toUpperCase().trim(), Number.parseFloat(price), Number.parseFloat(quantity), transactionType, this.transaction.symbol)
         .subscribe({
-          next: (reponse) => {
+          next: () => {
             this.updatedTransactionEmitter.emit();
             this.closeForm();
           },

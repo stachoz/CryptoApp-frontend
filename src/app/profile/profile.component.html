@@ -81,5 +81,6 @@
     <app-transaction-history 
         [transactions]="lastCoinsTransactions"
         (transactionDeleted)="handleDeletedTransaction($event)"
+        (transactionUpdated)="handleUpdatedTransaction()"
     ></app-transaction-history>
 </div>

@@ -79,6 +79,10 @@ export class ProfileComponent implements OnInit {
     this.getLastTransactionsOnUniqueCoins();
   }
 
+  handleUpdatedTransaction(){
+    this.getLastTransactionsOnUniqueCoins();
+  }
+
   getUserCoinsNames() {
     return Array.from(new Set(this.userCoins.map(userCoin => userCoin.symbol)));
   }

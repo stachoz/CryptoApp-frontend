@@ -1,6 +1,7 @@
 <app-edit-transaction-form *ngIf="transactionToEdit != undefined" 
 [transaction]="transactionToEdit"
 (closeFormEmitter)="hideTransactionEditForm()"
+(updatedTransactionEmitter)="passTransactionUpdated()"
 ></app-edit-transaction-form>
 <h3>Last transactions on your coins</h3>
 <table>

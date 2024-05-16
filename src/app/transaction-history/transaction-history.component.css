@@ -18,7 +18,7 @@ th, td {
 
 th {
     font-size: 1rem;
-    padding: 1rem 0.5rem;
+    padding: 1rem 0.3rem;
 }
 
 td {
@@ -52,7 +52,7 @@ td {
 
 .actions {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
 }
 
 .actions i:hover{
@@ -60,9 +60,13 @@ td {
 }
 
 .delete-icon, .edit-icon {
-    font-size: 1rem;
+    font-size: 1.2rem;
 }
 
 .delete-icon:hover {
     color: red;
+}
+
+.edit-icon:hover {
+    color:green;
 }
