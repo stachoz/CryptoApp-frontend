@@ -7,14 +7,19 @@ import { canActivate } from './_helpers/auth.guard';
 import { HomeComponent } from './home/home.component';
 import { PostPageComponent } from './post-page/post-page.component';
 import { TransactionHistoryComponent } from './transaction-history/transaction-history.component';
+import { LayoutComponent } from './layout/layout.component';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent  },
+
+  { path: '', component: LayoutComponent, canActivate: [canActivate],children:[
+    { path: '', component: HomeComponent  },
+    { path: 'profile', component:ProfileComponent},
+    { path: 'post/:id', component:PostPageComponent},
+    { path: 'history', component:TransactionHistoryComponent},
+  ]
+  },
   { path: 'register', component: RegisterComponent},
   { path: 'login', component:LoginComponent},
-  { path: 'profile', component:ProfileComponent, canActivate: [canActivate]},
-  { path: 'post/:id', component:PostPageComponent},
-  { path: 'history', component:TransactionHistoryComponent},
  
   { path: '**', redirectTo: ''}
 ];
