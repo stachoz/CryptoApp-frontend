@@ -12,6 +12,8 @@ import { LoginResponse } from '../../_models/LoginResponse';
 export class AuthService {
   private userCredentialsSubject: BehaviorSubject<UserCredentails | null>;
   public userCredentials: Observable<UserCredentails | null>; 
+  private isLoggedInSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public isLoggedIn: Observable<boolean> = this.isLoggedInSubject.asObservable();
 
   constructor(private http:HttpClient, private router:Router) { 
     this.userCredentialsSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('user')!))
@@ -24,11 +26,11 @@ export class AuthService {
 
   login(username:string, password: string){
     return this.http.post<LoginResponse>(`${environment.apiUrl}/auth/login`, {username, password})
-      
       .pipe(map((response) => {
         const userCredentials = new UserCredentails(username, response.accessToken);
         localStorage.setItem('user', JSON.stringify(userCredentials));
         this.userCredentialsSubject.next(userCredentials);
+        this.isLoggedInSubject.next(true);
         return userCredentials;
       }));
   }
@@ -36,6 +38,7 @@ export class AuthService {
   logout() {
     localStorage.removeItem('user');
     this.userCredentialsSubject.next(null);
+    this.isLoggedInSubject.next(false);
     this.router.navigate(['/login']);
   }
 

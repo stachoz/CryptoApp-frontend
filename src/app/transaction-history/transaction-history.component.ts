@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Transaction } from '../_models/Transaction';
 import { WalletService } from '../_services/wallet/wallet.service';
+import { BinanceService } from '../_services/binanceWebsocketApi/binance.service';
 
 @Component({
   selector: 'app-transaction-history',
@@ -13,7 +14,7 @@ export class TransactionHistoryComponent {
   @Output() transactionUpdated: EventEmitter<void> = new EventEmitter<void>();
   transactionToEdit?:Transaction;
 
-  constructor(private walletService:WalletService) {}
+  constructor(private walletService:WalletService, private binanceService:BinanceService) {}
 
   deleteCoinByName(coinSymbol:string) : void {
     this.walletService.deleteLastTransactionOnCoin(coinSymbol).subscribe(

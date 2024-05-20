@@ -19,13 +19,12 @@ export class PriceTrackerComponent implements OnInit{
     this.initializeWebSocket();
   }
 
-
   private initializeWebSocket(): void {
-    this.filteredWebsocketConnection();
+    this.subscribeToWebSocket()
   }
 
-  private filteredWebsocketConnection() {
-    this.subscribeToWebSocket((data: any) => {
+  private subscribeToWebSocket(){
+    this.binanceService.getWebSocketMessages().subscribe((data:any) => {
       if(data.s){
         const symbol = data.s.replace('USDT', '');
         if(this.coinsInformation.find(coin => coin.symbol === symbol)) {
@@ -33,16 +32,7 @@ export class PriceTrackerComponent implements OnInit{
           this.coinsPrice.set(symbol, currentPrice);
           this.totalWalletValue();
         }
-      }
-    })
-  }
-
-  private subscribeToWebSocket(callback: (data: any) => void){
-    this.binanceService.getWebSocket().subscribe(ws => {
-      ws.onmessage = (event: {data: any }) => {
-        const data = JSON.parse(event.data);
-        callback(data);
-      }
+      }      
     })
   }
   

@@ -1,0 +1,117 @@
+ul{
+    margin: 0;
+    padding: 1rem;
+    list-style: none;
+}
+
+li{
+    padding-bottom: 0.2rem;
+    display: grid;
+    grid-template-columns: 25% 25% 40% 10%;
+    align-items: center;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.3rem;
+    font-size: 0.8rem;
+} 
+
+input[type="text"],input[type="number"]{
+    width: calc(100% - 0.1rem);
+    margin: 0;
+}
+
+button {
+    display: block;
+    padding: 0.2rem 1rem;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 0.3rem;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+button:hover{
+    background-color: #0056b3;
+}
+
+small {
+    padding-top: 0.1rem;
+    font-size: 0.7rem;
+}
+
+.container {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 20%;
+    margin-right: 1rem;
+    z-index: 1000;
+}
+
+.container.expanded {
+    height: auto;
+}
+
+.panel-title {
+    background-color: #e0e0e0;
+    padding: 0.5rem 1rem;
+    border-top-left-radius: 1rem;;
+    border-top-right-radius: 1rem;;
+    font-size: 1.4rem;
+    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+}
+
+.form-container {
+    background-color: #e0e0e0;
+    padding: 0.5rem 1rem;
+}
+
+.alerts {
+    position: relative;
+}
+
+.chevron-icon {
+    display: flex;
+    align-items: center;
+}
+
+.chevron-icon:hover{
+    cursor: pointer;
+}
+
+.form-groups {
+    display: flex;
+    justify-content: space-between;
+}
+
+.form-group {
+    width: 25%;
+}
+
+.alerts {
+    max-height: 300px;
+    overflow-y: auto;
+    background-color: whitesmoke;
+}
+
+.symbol {
+    text-align: start;
+}
+
+.repeat {
+    text-align: center;
+}
+
+.price, .delete {
+    text-align: end;
+}
+
+.delete:hover {
+    cursor: pointer;
+    color: red;
+}

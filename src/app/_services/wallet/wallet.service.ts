@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { Transaction } from '../../_models/Transaction';
@@ -8,11 +7,9 @@ import { Transaction } from '../../_models/Transaction';
   providedIn: 'root'
 })
 export class WalletService {
-  private coinData: Map<string, number> = new Map();
-
   constructor(private http:HttpClient) { }
   
-  getCoins(): Observable<string[]> {
+  getCoins() {
     return this.http.get<string[]>(`${environment.apiUrl}/coins`);
   }
 
@@ -31,4 +28,5 @@ export class WalletService {
   updateLastTransactionOnCoin(symbol: string, price: number, quantity: number, type: string, updatingCoinSymbol: string){
     return this.http.put<any>(`${environment.apiUrl}/wallet/transactions/lastOnCoins/${updatingCoinSymbol}`, {symbol, price, quantity, type});
   }
+
 }   

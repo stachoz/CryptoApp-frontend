@@ -10,11 +10,11 @@ label {
 
 input[type="text"],input[type="number"],
 select {
-    width: calc(100% - 10px);
-    width: 100%;
+    width: calc(100% - 0.8rem);
     padding: 0.5rem;
     border: 1px solid #ccc;
     border-radius: 0.3rem;
+    background-color: white;
 }
 
 #option {
@@ -29,7 +29,7 @@ button {
     background-color: #007bff;
     color: #fff;
     border: none;
-    border-radius: 5px;
+    border-radius: 0.3rem;
     cursor: pointer;
 }
 

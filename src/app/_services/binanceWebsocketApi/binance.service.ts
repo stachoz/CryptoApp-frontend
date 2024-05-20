@@ -1,5 +1,5 @@
 import { Injectable} from '@angular/core';
-import { Observable, ReplaySubject, filter } from 'rxjs';
+import { Observable, ReplaySubject, Subject, filter } from 'rxjs';
 import { WalletService } from '../wallet/wallet.service';
 
 @Injectable({
@@ -8,7 +8,7 @@ import { WalletService } from '../wallet/wallet.service';
 export class BinanceService{
   private binanceWebSocketUrl:string = 'wss://stream.binance.com:9443/ws/';
   private ws:WebSocket | undefined;
-  private wsSubject: ReplaySubject<WebSocket> = new ReplaySubject<WebSocket>(1);
+  private messageSubject: Subject<any> = new Subject<any>();
   private subscribedCoins: String[] = [];
   private avgPriceStreamName = 'usdt@avgPrice';
 
@@ -26,7 +26,10 @@ export class BinanceService{
       this.ws.onerror = (error) => {
         console.error(error);
       }
-      this.wsSubject.next(this.ws);
+      this.ws.onmessage = (event) => {
+        const data = JSON.parse(event.data);
+        this.messageSubject.next(data);
+      }
     });
   }
 
@@ -47,14 +50,8 @@ export class BinanceService{
     }
   }
 
-  getWebSocket(): Observable<any> {
-    return this.wsSubject.asObservable();
-  }
-
-  getFileterdWebSocket(coinSymbol: string) : Observable<any> {
-    return this.getWebSocket().pipe(
-      filter(data => data && data.s && data.s.toLowerCase() === coinSymbol.replace('USDT', '').toLowerCase())
-    );
+  getWebSocketMessages(): Observable<any>{
+    return this.messageSubject.asObservable();
   }
 
   isBeingSubscribed(coinSymbol: string) : boolean {
