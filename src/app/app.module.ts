@@ -20,6 +20,7 @@ import { DynamicCurrencyPrecisionPipe } from './_helpers/dynamic-currency-precis
 import { TransactionHistoryComponent } from './transaction-history/transaction-history.component';
 import { EditTransactionFormComponent } from './edit-transaction-form/edit-transaction-form.component';
 import { AlertsPanelComponent } from './alerts-panel/alerts-panel.component';
+import { LayoutComponent } from './layout/layout.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { AlertsPanelComponent } from './alerts-panel/alerts-panel.component';
     TransactionHistoryComponent,
     EditTransactionFormComponent,
     AlertsPanelComponent,
+    LayoutComponent,
   ],
   imports: [
     BrowserModule,
