@@ -1,5 +1,5 @@
 import { Injectable} from '@angular/core';
-import { Observable, ReplaySubject, Subject, filter } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { WalletService } from '../wallet/wallet.service';
 
 @Injectable({
@@ -33,7 +33,7 @@ export class BinanceService{
     });
   }
 
-  subscribeToNewStream(coinSymbol: string){
+  subscribeToNewStreamIfNeeded(coinSymbol: string){
     if(!this.isBeingSubscribed(coinSymbol)){
       if(this.ws && this.ws.readyState == WebSocket.OPEN){
         const subscriptionMessage = JSON.stringify({
