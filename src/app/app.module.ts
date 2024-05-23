@@ -21,6 +21,7 @@ import { TransactionHistoryComponent } from './transaction-history/transaction-h
 import { EditTransactionFormComponent } from './edit-transaction-form/edit-transaction-form.component';
 import { AlertsPanelComponent } from './alerts-panel/alerts-panel.component';
 import { LayoutComponent } from './layout/layout.component';
+import { NotificationsComponent } from './notifications/notifications.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { LayoutComponent } from './layout/layout.component';
     EditTransactionFormComponent,
     AlertsPanelComponent,
     LayoutComponent,
+    NotificationsComponent,
   ],
   imports: [
     BrowserModule,

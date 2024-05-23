@@ -4,6 +4,7 @@ import { AlertService } from '../_services/alert/alert.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import { BinanceService } from '../_services/binanceWebsocketApi/binance.service';
 import { AuthService } from '../_services/auth/auth.service';
+import { EMPTY, concatMap, from } from 'rxjs';
 
 @Component({
   selector: 'app-alerts-panel',
@@ -11,7 +12,7 @@ import { AuthService } from '../_services/auth/auth.service';
   styleUrl: './alerts-panel.component.css'
 })
 export class AlertsPanelComponent implements OnInit{
-  isAuthenticated: boolean = false;
+  isAuthenticated: boolean = this.authService.isAuthenticated();
   isExpanded: boolean = false;
   alerts: Alert[] = [];
   alertForm = this.fb.group({
@@ -22,32 +23,47 @@ export class AlertsPanelComponent implements OnInit{
   lastCoinPrice: Map<string, number> = new Map<string, number>();
   errorResponse: string = "";
 
-  constructor(private alertService:AlertService, private fb: FormBuilder, private binanceService:BinanceService, private authService: AuthService){
-    this.authService.isLoggedIn.subscribe(isLoggedIn => {
-        this.isAuthenticated = isLoggedIn;
-      }
-    );
-  }
+  constructor(private alertService:AlertService, private fb: FormBuilder, private binanceService:BinanceService, private authService: AuthService){}
 
   ngOnInit(): void {
     this.loadUserAlerts();
     this.binanceService.getWebSocketMessages().subscribe((data:any) => {
       if(data.s){
-        console.log(data);
         const symbol = data.s.replace('USDT', '');
         const price = data.w;
         this.lastCoinPrice.set(symbol, price);
-        this.alerts.forEach(
-          alert => {
-            if(alert.symbol ===  symbol){
-              if(this.alertService.isAlertCompleted(alert.initialPrice, Number.parseFloat(price), alert.alertPrice)){
-                // console.log(`Alert completed. ${JSON.stringify(alert)}, current price: ${data.w}`);
-              } else {
-                // console.log(`Not alert. ${JSON.stringify(alert)}, current price: ${data.w}`);
-              }
-            }
-          }
+        
+        from(this.alerts).pipe(
+          concatMap(alert => this.processAlert(alert, symbol, price))
         )
+        .subscribe({
+          next: ()=> {
+            this.loadUserAlerts();
+          }
+        }
+        );
+      }
+    })
+  }
+
+  processAlert(alert: Alert, symbol: string, price: string){
+    if(alert.repeatTimes > 0 && alert.symbol ===  symbol){
+      if(this.alertService.isAlertCompleted(alert.initialPrice, Number.parseFloat(price), alert.alertPrice)){
+        console.log(`id: ${alert.id}, repeat: ${alert.repeatTimes}`);
+        --alert.repeatTimes;
+        return this.alertService.sendAlert(alert.id);
+      }
+    }
+    return EMPTY;
+  }
+
+  sendAlertAndReload(alert: Alert) : void {
+    this.alertService.sendAlert(alert.id).subscribe({
+      next: () => {
+        this.loadUserAlerts();
+      },
+      error: (err) => {
+        console.log(err);
       }
     })
   }
@@ -73,18 +89,18 @@ export class AlertsPanelComponent implements OnInit{
   onSumbit(){
     const { symbol, price, repeat } = this.alertForm.value;
     if(symbol && price && repeat){
-      const initialPrice = this.lastCoinPrice.get(symbol.toUpperCase().trim());
-      if(initialPrice){
-        console.log(typeof(initialPrice));
-        this.alertService.addAlert(initialPrice, Number.parseFloat(price), Number.parseInt(repeat), symbol.toUpperCase().trim()).subscribe({
-          next: () => {
-            this.loadUserAlerts();
-          },
-          error: (erorr) => {
-            this.errorResponse = erorr.message;
-          }
-        })
-      }
+      const initialPrice = this.lastCoinPrice.get(symbol.toUpperCase().trim()) ?? null;
+      this.alertService.addAlert(initialPrice, Number.parseFloat(price), Number.parseInt(repeat), symbol.toUpperCase().trim()).subscribe({
+        next: () => {
+          this.alertForm.reset();
+          this.errorResponse = "";
+          this.loadUserAlerts();
+          this.binanceService.subscribeToNewStreamIfNeeded(symbol);
+        },
+        error: (erorr) => {
+          this.errorResponse = erorr.message;
+        }
+      })
     }
   }
 

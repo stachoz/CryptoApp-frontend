@@ -63,7 +63,7 @@ export class ProfileComponent implements OnInit {
             console.log(reponse);
             this.coinFormErrorResponse = "";
             this.getLastTransactionsOnUniqueCoins();
-            this.bianceService.subscribeToNewStream(symbol);
+            this.bianceService.subscribeToNewStreamIfNeeded(symbol);
           },
           error: (error) => {
             console.log(error);

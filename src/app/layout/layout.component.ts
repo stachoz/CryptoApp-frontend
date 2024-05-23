@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../_services/auth/auth.service';
 
 @Component({
@@ -6,10 +6,11 @@ import { AuthService } from '../_services/auth/auth.service';
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.css'
 })
-export class LayoutComponent {
+export class LayoutComponent implements OnInit{
   isAuthenticated:boolean = false;
 
-  constructor(private authService:AuthService){
-    this.authService.isLoggedIn.subscribe(isLoggedIn => this.isAuthenticated = isLoggedIn);
+  constructor(private authService:AuthService){}
+  ngOnInit(): void {
+    this.authService.userCredentials.subscribe(UserCredentails => UserCredentails ? this.isAuthenticated = true : this.isAuthenticated = false);
   }
 }
