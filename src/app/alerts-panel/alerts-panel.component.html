@@ -30,15 +30,6 @@
                             <div *ngIf="price.errors?.['min']">Price is too small</div>
                         </small>
                     </div>
-                    <div class="form-group">
-                        <label for="repeat">Repeat</label>
-                        <input type="number" id="repeat" step="1" min="0" max="200" formControlName="repeat">
-                        <small *ngIf="repeat.invalid && (repeat.dirty || repeat.touched)">
-                            <div *ngIf="repeat.errors?.['required']">Repeat is required</div>
-                            <div *ngIf="repeat.errors?.['min']">Repeat is too small</div>
-                            <div *ngIf="repeat.errors?.['max']">Repeat is too big</div>
-                        </small>
-                    </div>
                     <button type="submit">Add</button>
                 </div>
             </form>
@@ -46,7 +37,6 @@
         <ul *ngIf="alerts.length != 0">
             <li *ngFor="let alert of alerts">
                 <div class="symbol">{{ alert.symbol }}</div>
-                <div class="repeat">Repeat: {{ alert.repeatTimes }}</div>
                 <div class="price">{{alert.alertPrice | dynamicCurrencyPrecision}}</div>
                 <div class="delete"(click)="deleteAlert(alert.id)">
                     <i class="fa-solid fa-trash"></i>

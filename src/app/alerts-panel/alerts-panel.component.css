@@ -6,9 +6,9 @@ ul{
 
 li{
     padding-bottom: 0.2rem;
-    display: grid;
-    grid-template-columns: 25% 25% 40% 10%;
+    display: flex;
     align-items: center;
+    justify-content: space-between;
 }
 
 label {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Alert } from '../_models/Alert';
 import { AlertService } from '../_services/alert/alert.service';
 import { FormBuilder, Validators } from '@angular/forms';
@@ -12,13 +12,13 @@ import { EMPTY, concatMap, from } from 'rxjs';
   styleUrl: './alerts-panel.component.css'
 })
 export class AlertsPanelComponent implements OnInit{
+  @Output() alertEventEmitter:EventEmitter<Alert> = new EventEmitter<Alert>();
   isAuthenticated: boolean = this.authService.isAuthenticated();
   isExpanded: boolean = false;
   alerts: Alert[] = [];
   alertForm = this.fb.group({
     symbol: ['', [Validators.required, Validators.maxLength(20)]],
     price: ['', [Validators.required, Validators.min(0)]],
-    repeat: ['', [Validators.required, Validators.min(1), Validators.max(200)]]
   });
   lastCoinPrice: Map<string, number> = new Map<string, number>();
   errorResponse: string = "";
@@ -47,10 +47,10 @@ export class AlertsPanelComponent implements OnInit{
   }
 
   processAlert(alert: Alert, symbol: string, price: string){
-    if(alert.repeatTimes > 0 && alert.symbol ===  symbol){
+    if(alert.symbol ===  symbol){
       if(this.alertService.isAlertCompleted(alert.initialPrice, Number.parseFloat(price), alert.alertPrice)){
-        console.log(`id: ${alert.id}, repeat: ${alert.repeatTimes}`);
-        --alert.repeatTimes;
+        this.alerts = this.alerts.filter(a => a.id != alert.id);
+        this.alertEventEmitter.emit(alert);
         return this.alertService.sendAlert(alert.id);
       }
     }
@@ -87,10 +87,10 @@ export class AlertsPanelComponent implements OnInit{
   }
 
   onSumbit(){
-    const { symbol, price, repeat } = this.alertForm.value;
-    if(symbol && price && repeat){
+    const { symbol, price } = this.alertForm.value;
+    if(symbol && price){
       const initialPrice = this.lastCoinPrice.get(symbol.toUpperCase().trim()) ?? null;
-      this.alertService.addAlert(initialPrice, Number.parseFloat(price), Number.parseInt(repeat), symbol.toUpperCase().trim()).subscribe({
+      this.alertService.addAlert(initialPrice, Number.parseFloat(price), symbol.toUpperCase().trim()).subscribe({
         next: () => {
           this.alertForm.reset();
           this.errorResponse = "";
@@ -121,8 +121,5 @@ export class AlertsPanelComponent implements OnInit{
 
   get price(){
     return this.alertForm.controls['price'];
-  }
-  get repeat(){
-    return this.alertForm.controls['repeat'];
   }
 }

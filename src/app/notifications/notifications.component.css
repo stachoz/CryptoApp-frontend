@@ -1,0 +1,58 @@
+small:hover {
+    cursor: pointer;
+}
+
+.container {
+    direction: rtl;
+    position: fixed;
+    padding-left: 1rem;
+    overflow-y: scroll;
+    max-height: 90vh;
+}
+
+.container > * {
+    direction: ltr;
+}
+
+.notification {
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+}
+
+.price-down {
+    background-color: rgba(255, 0, 0, 0.5);
+    border-left: 3px solid red;
+}
+
+.price-up {
+    background-color: rgba(0, 128, 0, 0.5);
+    border-left: 3px solid green;
+}
+
+.button-down:hover {
+    background-color: rgba(255, 0, 0, 0.3);
+}
+
+.button-up:hover {
+    background-color: rgba(0, 128, 0, 0.3);
+}
+
+.notification-title {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 0.5rem;
+}
+
+.close-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.notification-body {
+    font-size: 1rem;
+}
