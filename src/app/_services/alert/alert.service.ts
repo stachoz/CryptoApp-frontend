@@ -14,8 +14,8 @@ export class AlertService {
     return this.http.get<Alert[]>(`${environment.apiUrl}/alert`);
   }
 
-  addAlert(initialPrice: number | null, alertPrice: number, repeatTimes: number, symbol: string){
-    return this.http.post<Alert>(`${environment.apiUrl}/alert`, {initialPrice, alertPrice, repeatTimes, symbol});
+  addAlert(initialPrice: number | null, alertPrice: number, symbol: string){
+    return this.http.post<Alert>(`${environment.apiUrl}/alert`, {initialPrice, alertPrice, symbol});
   }
 
   deleteAlert(alertId: number){

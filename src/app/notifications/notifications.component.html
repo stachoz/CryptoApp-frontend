@@ -1,1 +1,17 @@
-<p>notifications works!</p>
+<div class="container">
+    <div class="notifications">
+        <small (click)="deleteAll()" *ngIf="alerts.length > 1">Delete all</small>
+        <div *ngFor="let alert of alerts"
+        [ngClass]="{'notification': true, 'price-up': isUp(alert.initialPrice, alert.alertPrice), 'price-down': !isUp(alert.initialPrice, alert.alertPrice)}">
+            <div class="notification-title">
+                <div class="title">{{alert.symbol}} Price alert</div>
+                <div (click)="deleteAlert(alert.id)" [ngClass]="{'close-icon': true, 'button-up': isUp(alert.initialPrice, alert.alertPrice), 'button-down': !isUp(alert.initialPrice, alert.alertPrice)}">
+                    <i class="fa-solid fa-xmark"></i>
+                </div>
+            </div>
+            <div class="notification-body">
+                {{ alertMessage(alert.symbol, alert.initialPrice, alert.alertPrice) }}
+            </div>
+        </div>
+    </div>
+</div>
