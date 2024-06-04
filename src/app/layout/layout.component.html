@@ -1,5 +1,5 @@
 <div *ngIf="isAuthenticated">
-    <app-notifications (alertDeletedEvent)="handleDeletedAlert($event)" [alerts]="alerts"></app-notifications>
+    <app-notifications (alertDeletedEvent)="handleDeletedAlert($event)" [alerts]="setOfAlerts()"></app-notifications>
     <app-alerts-panel (alertEventEmitter)="handleAlertEvent($event)"></app-alerts-panel>
 </div>
 <div class="content">

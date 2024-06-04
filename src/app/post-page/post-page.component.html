@@ -1,3 +1,4 @@
+<app-report-form [showReportForm]="showReportForm" [postId]="reportedPostId" [commmentId]="reportedCommentId" (reportFormClosed)="closeReportForm()"></app-report-form>
 <div class="container">
     <div class="post" *ngIf="post">
         <div class="info">
@@ -9,7 +10,7 @@
                     {{post.timeAdded | date: 'medium'}}
                 </div>
             </div>
-            <div class="options">
+            <div class="options" (click)="openReportForm(post.id, undefined)">
                 <i class="fa-solid fa-ellipsis"></i>
             </div>
         </div>
@@ -33,7 +34,7 @@
                     <div class="author">{{comment.authorUsername}}</div>
                     <div class="timeAdded">{{comment.timeAdded | date: 'medium'}}</div>
                 </div>
-                <div class="options">
+                <div class="options" (click)="openReportForm(post.id, comment.id)">
                     <i class="fa-solid fa-ellipsis"></i>
                 </div>
             </div>

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { Alert } from '../_models/Alert';
 import { AlertService } from '../_services/alert/alert.service';
 import { FormBuilder, Validators } from '@angular/forms';

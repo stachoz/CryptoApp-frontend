@@ -42,7 +42,7 @@ export class BinanceService{
           id: 1
         });
         this.ws.send(subscriptionMessage);
-        console.log('message sended');
+        console.log(`message sended for symbol ${coinSymbol}`);
         this.subscribedCoins.push(coinSymbol);
       } else {
         console.error('WebSocket connection is not open');

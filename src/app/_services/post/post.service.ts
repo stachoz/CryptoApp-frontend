@@ -28,6 +28,10 @@ export class PostService {
     return this.http.post<Post>(`${environment.apiUrl}/post`, {content});
   }
 
+  reportPost(cause: string, postId: number){
+    return this.http.post<any>(`${environment.apiUrl}/post/${postId}/report`, {cause});
+  }
+
   getPostComments(postId: number, page: number, size: number){
     const params = {
       'page': page,
@@ -40,4 +44,7 @@ export class PostService {
     return this.http.post<any>(`${environment.apiUrl}/post/${postId}/comment`, {content});
   }
 
+  reportComment(cause: string, commendId:number){
+    return this.http.post<any>(`${environment.apiUrl}/post/comment/${commendId}/report`, {cause});
+  }
 }

@@ -19,6 +19,9 @@ export class PostPageComponent implements OnInit{
   commentForm = this.fb.group({
     content: ['', Validators.required]
   })
+  showReportForm:boolean = false;
+  reportedPostId!:number;
+  reportedCommentId?:number;
 
   constructor(private postService:PostService, private activatedRoute:ActivatedRoute, private fb:FormBuilder) {
   };
@@ -71,5 +74,15 @@ export class PostPageComponent implements OnInit{
   onPageChange(page: number){
     this.page = page;
     this.getComments(this.post.id, page, this.size);
+  }
+
+  openReportForm(postId: number, commmentId: number | undefined){
+    this.reportedPostId = postId;
+    if(commmentId) this.reportedCommentId = commmentId;
+    this.showReportForm = true;
+  }
+
+  closeReportForm(){
+    this.showReportForm = false;
   }
 }

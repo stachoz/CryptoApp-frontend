@@ -1,0 +1,19 @@
+<div class="modal-background" *ngIf="showReportForm"></div>
+<div class="container" *ngIf="showReportForm">
+    <div class="top-bar">
+        <div class="title">Report this content</div>
+        <div class="close-icon" (click)="closeReportForm()">
+            <i class="fa-solid fa-xmark"></i>
+        </div>
+    </div>
+    <form [formGroup]="reportForm">
+        <div class="common-causes">
+            <button type="button" class="common-cause" (click)="addCommonCause('Spam')">Spam</button>
+            <button type="button" class="common-cause" (click)="addCommonCause('Hate speech')">Hate speech</button>
+            <button type="button" class="common-cause" (click)="addCommonCause('Misinformation')">Misinformation</button>
+            <button type="button" class="common-cause" (click)="addCommonCause('Violance')">Violance</button>
+        </div>
+        <textarea id="cause" formControlName="cause" placeholder="what's wrong?" maxlength="300" minlength="2"></textarea>
+        <button type="submit" [disabled]="reportForm.invalid" (click)="onSubmit()">Report</button>
+    </form>
+</div>
