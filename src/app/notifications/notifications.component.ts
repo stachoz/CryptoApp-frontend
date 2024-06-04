@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output} from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, Output} from '@angular/core';
 import { Alert } from '../_models/Alert';
 import { DynamicCurrencyPrecisionPipe } from '../_helpers/dynamic-currency-precision.pipe';
 
@@ -7,9 +7,9 @@ import { DynamicCurrencyPrecisionPipe } from '../_helpers/dynamic-currency-preci
   templateUrl: './notifications.component.html',
   styleUrl: './notifications.component.css'
 })
-export class NotificationsComponent {
+export class NotificationsComponent  {
   @Output() alertDeletedEvent: EventEmitter<number> = new EventEmitter<number>();
-  @Input() alerts:Alert[] = [];
+  @Input() alerts:Set<Alert> = new Set<Alert>();
 
   constructor(private currencyPipe: DynamicCurrencyPrecisionPipe) {}
 
@@ -23,12 +23,17 @@ export class NotificationsComponent {
   }
 
   deleteAlert(id: number){
-    this.alerts = this.alerts.filter(alert => alert.id !== id);
+    for(const alert of this.alerts){
+      if(alert.id === id) {
+        this.alerts.delete(alert);
+        break;
+      }
+    }
     this.alertDeletedEvent.emit(id);
   }
 
   deleteAll(){
-    this.alerts = [];
+    this.alerts = new Set<Alert>();
     this.alertDeletedEvent.emit(-1);
   }
 

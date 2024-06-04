@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, createNgModule } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, map } from 'rxjs';
 import { UserCredentails } from '../../_models/UserCredentials';
@@ -36,6 +36,7 @@ export class AuthService {
     localStorage.removeItem('user');
     this.userCredentialsSubject.next(null);
     this.router.navigate(['/login']);
+    window.location.reload();
   }
 
   get userValue() {

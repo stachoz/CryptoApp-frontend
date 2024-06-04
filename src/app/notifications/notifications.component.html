@@ -1,6 +1,6 @@
 <div class="container">
     <div class="notifications">
-        <small (click)="deleteAll()" *ngIf="alerts.length > 1">Delete all</small>
+        <small (click)="deleteAll()" *ngIf="alerts.size > 1">Delete all</small>
         <div *ngFor="let alert of alerts"
         [ngClass]="{'notification': true, 'price-up': isUp(alert.initialPrice, alert.alertPrice), 'price-down': !isUp(alert.initialPrice, alert.alertPrice)}">
             <div class="notification-title">

@@ -22,6 +22,7 @@ import { EditTransactionFormComponent } from './edit-transaction-form/edit-trans
 import { AlertsPanelComponent } from './alerts-panel/alerts-panel.component';
 import { LayoutComponent } from './layout/layout.component';
 import { NotificationsComponent } from './notifications/notifications.component';
+import { ReportFormComponent } from './report-form/report-form.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { NotificationsComponent } from './notifications/notifications.component'
     AlertsPanelComponent,
     LayoutComponent,
     NotificationsComponent,
+    ReportFormComponent,
   ],
   imports: [
     BrowserModule,
