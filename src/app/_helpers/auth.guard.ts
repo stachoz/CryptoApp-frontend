@@ -4,7 +4,7 @@ import { AuthService } from "../_services/auth/auth.service";
 
 export const canActivate: CanActivateFn = (
     route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
+    state: RouterStateSnapshot,
 ) => {
     const authService = inject(AuthService);
     const router = inject(Router);
@@ -12,4 +12,16 @@ export const canActivate: CanActivateFn = (
         return true;
     }
     return router.createUrlTree(['login']);
+};
+
+export const canActivateForAdmin: CanActivateFn = (
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot,
+) => {
+    const authService = inject(AuthService);
+    const router = inject(Router);
+    if(authService.isAdmin()) {
+        return true;
+    }
+    return router.navigate(['']);
 };
