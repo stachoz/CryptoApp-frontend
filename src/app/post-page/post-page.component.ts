@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { Post } from '../_models/Post';
 import { PostService } from '../_services/post/post.service';
 import { ActivatedRoute } from '@angular/router';
 import { Comment } from '../_models/Comment';
 import { FormBuilder, Validators } from '@angular/forms';
+import { HttpParams } from '@angular/common/http';
 
 @Component({
   selector: 'app-post-page',
@@ -20,11 +21,11 @@ export class PostPageComponent implements OnInit{
     content: ['', Validators.required]
   })
   showReportForm:boolean = false;
-  reportedPostId!:number;
-  reportedCommentId?:number;
+  reportedPostId!:number; // for report form
+  reportedCommentId?:number; // for report form
+  comentToSelectId:string= ""; // for admin tasks. Type of string because it is taken from url 
 
-  constructor(private postService:PostService, private activatedRoute:ActivatedRoute, private fb:FormBuilder) {
-  };
+  constructor(private postService:PostService, private activatedRoute:ActivatedRoute, private fb:FormBuilder) {}
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(params => {
@@ -44,6 +45,8 @@ export class PostPageComponent implements OnInit{
       next: (pagedResponse) => {
         this.comments = pagedResponse.content;
         this.totalPages = pagedResponse.totalPages;
+        this.selectReportedCommentId();
+        console.log(this.comentToSelectId);
       }
     })
   }
@@ -84,5 +87,11 @@ export class PostPageComponent implements OnInit{
 
   closeReportForm(){
     this.showReportForm = false;
+  }
+
+  selectReportedCommentId(){
+    this.activatedRoute.queryParamMap.subscribe(params => {
+      this.comentToSelectId = params.get('reportedCommentId') ?? "";
+    })
   }
 }

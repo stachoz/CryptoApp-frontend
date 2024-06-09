@@ -23,6 +23,7 @@ import { AlertsPanelComponent } from './alerts-panel/alerts-panel.component';
 import { LayoutComponent } from './layout/layout.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { ReportFormComponent } from './report-form/report-form.component';
+import { AdminPageComponent } from './admin-page/admin-page.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { ReportFormComponent } from './report-form/report-form.component';
     LayoutComponent,
     NotificationsComponent,
     ReportFormComponent,
+    AdminPageComponent,
   ],
   imports: [
     BrowserModule,

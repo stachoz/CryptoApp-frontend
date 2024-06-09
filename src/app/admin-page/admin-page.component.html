@@ -1,0 +1,91 @@
+<div class="container">
+    <div class="blocked-users">
+        <div class="title">Blocked Users</div>
+        <div class="empty" *ngIf="blockedUsers.length === 0">No elements to display</div>
+        <table *ngIf="blockedUsers.length !== 0">
+            <tr>
+                <th>username</th>
+                <th>email</th>
+                <th>action</th>
+            </tr>
+            <tr *ngFor="let user of blockedUsers">
+                <th>{{ user.username}}</th>
+                <th>{{ user.email}}</th>
+                <th>
+                    <div class="actions">
+                        <div class="unblock-user action" (click)="changeUserAccess(user.username, ublockUserAction)">
+                            <div class="info-box">Unblock user</div>
+                            <i class="fa-solid fa-unlock"></i>
+                        </div>         
+                    </div> 
+                </th>
+            </tr> 
+        </table>
+    </div>
+    <div class="post-reports">
+        <div class="title">Reported Posts</div>
+        <div class="empty" *ngIf="reportedPosts.length === 0">No elements to display</div>
+        <table *ngIf="reportedPosts.length !== 0">
+            <tr>
+                <th>cause</th>
+                <th>reported resource</th>
+                <th>post author</th>
+                <th>action</th>
+            </tr>
+            <tr *ngFor="let reportedPost of reportedPosts">
+                <td>{{ reportedPost.cause}}</td>
+                <td><a [routerLink]="postRoute + reportedPost.post.id">view post</a></td>
+                <td>{{ reportedPost.post.author}}</td>
+                <td>
+                    <div class="actions">
+                        <div class="delete-report action" (click)="deletePostReport(reportedPost.reportId)">
+                            <div class="info-box ">delete report</div>
+                            <i class="fa-solid fa-xmark"></i>
+                        </div>
+                        <div class="delete-resource action" (click)="deletePost(reportedPost.post.id)">
+                            <div class="info-box">delete post</div>
+                            <i class="fa-solid fa-trash"></i>
+                        </div>
+                        <div class="block-author action" (click)="changeUserAccess(reportedPost.post.author, blockUserAction)"> 
+                            <div class="info-box">block author</div>
+                            <i class="fa-solid fa-ban"></i>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="comment-reports">
+        <div class="title">Reported Comments</div>
+        <div class="empty" *ngIf="reportedComments.length === 0">No elements to display</div>
+        <table *ngIf="reportedComments.length !== 0">
+            <tr>
+                <th>cause</th>
+                <th>reported resource</th>
+                <th>comment author</th>
+                <th>action</th>
+            </tr>
+            <tr *ngFor="let reportedComment of reportedComments">
+                <td>{{ reportedComment.cause}}</td>
+                <td><a (click)="navigateToReportedComment(reportedComment.comment.postId, reportedComment.comment.id)">view comment</a></td>
+                <td>{{ reportedComment.comment.authorUsername}}</td>
+                <td>
+                    <div class="actions">
+                        <div class="delete-report action" (click)="deleteCommentReport(reportedComment.id)">
+                            <div class="info-box ">delete report</div>
+                            <i class="fa-solid fa-xmark"></i>
+                        </div>
+                        <div class="delete-resource action" (click)="deleteComment(reportedComment.comment.id)">
+                            <div class="info-box">delete comment</div>
+                            <i class="fa-solid fa-trash"></i>
+                        </div>
+                        <div class="block-author action" (click)="changeUserAccess(reportedComment.comment.authorUsername, blockUserAction)">
+                            <div class="info-box">block author</div>
+                            <i class="fa-solid fa-ban"></i>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

@@ -47,4 +47,24 @@ export class PostService {
   reportComment(cause: string, commendId:number){
     return this.http.post<any>(`${environment.apiUrl}/post/comment/${commendId}/report`, {cause});
   }
+
+  getRerportedPosts(){
+    return this.http.get<any>(`${environment.apiUrl}/post/report/list`);
+  }
+
+  getReportedComments(){
+    return this.http.get<any>(`${environment.apiUrl}/post/comment/report/list`);
+  }
+
+  deleteReport(reportId: number){
+    return this.http.delete<any>(`${environment.apiUrl}/post/report/${reportId}`);
+  }
+
+  deletePost(postId: number){
+    return this.http.delete<any>(`${environment.apiUrl}/post/${postId}`);
+  }
+
+  deleteComment(commentId: number){
+    return this.http.delete<any>(`${environment.apiUrl}/post/comment/${commentId}`);
+  }
 }

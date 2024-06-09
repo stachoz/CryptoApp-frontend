@@ -5,6 +5,8 @@ import { BehaviorSubject, Observable, map } from 'rxjs';
 import { UserCredentails } from '../../_models/UserCredentials';
 import { environment } from '../../../environments/environment';
 import { LoginResponse } from '../../_models/LoginResponse';
+import { jwtDecode } from 'jwt-decode';
+import { JwtPayload } from '../../_models/JwtPayload';
 
 @Injectable({
   providedIn: 'root'
@@ -25,6 +27,8 @@ export class AuthService {
   login(username:string, password: string){
     return this.http.post<LoginResponse>(`${environment.apiUrl}/auth/login`, {username, password})
       .pipe(map((response) => {
+        const decoded = this.decodeToken(response.accessToken);
+        localStorage.setItem('authorities', decoded.authorities.toString());
         const userCredentials = new UserCredentails(username, response.accessToken);
         localStorage.setItem('user', JSON.stringify(userCredentials));
         this.userCredentialsSubject.next(userCredentials);
@@ -34,9 +38,10 @@ export class AuthService {
 
   logout() {
     localStorage.removeItem('user');
+    localStorage.removeItem('authorities');
     this.userCredentialsSubject.next(null);
-    this.router.navigate(['/login']);
     window.location.reload();
+    this.router.navigate(['/login']);
   }
 
   get userValue() {
@@ -45,5 +50,17 @@ export class AuthService {
 
   isAuthenticated() : boolean {
     return this.userValue ? true : false;
+  }
+  
+  isAdmin(): boolean {
+    const authorities = localStorage.getItem('authorities');
+    if(authorities) return authorities.includes('ROLE_ADMIN') || authorities.includes("ROLE_MODERATOR");
+    return false;
+  }
+
+  decodeToken(token: string){
+    const decoded = jwtDecode<JwtPayload>(token);
+    console.log(decoded);
+    return decoded;
   }
 }

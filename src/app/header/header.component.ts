@@ -16,4 +16,8 @@ export class HeaderComponent {
   isAuthenticated() {
     return this.authService.isAuthenticated();
   }
+  
+  isAdmin(){
+    return this.authService.isAdmin();
+  }
 }
