@@ -1,0 +1,75 @@
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    padding: 0.3rem;
+    text-align: center;
+    border-bottom: 1px solid black;
+    font-size: 1rem;
+}
+
+.container {
+    width: 55%;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin: 0 auto;
+}
+
+.empty {
+    display: flex;
+    justify-content: center;
+}
+
+.post-reports, .comment-reports, .blocked-users {
+    height: fit-content;
+    width: 49%;
+    max-height: 80vh;
+    min-height: 3rem;
+    overflow-y: scroll;
+    background-color: whitesmoke;
+    padding: 1rem;
+    border-radius: 2rem;
+    margin-bottom: 2rem;
+}
+
+.title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    padding-bottom: 1rem;
+}
+
+.actions {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.action {
+    padding: 0 0.5rem;
+}
+
+.action:hover {
+    cursor: pointer;
+}
+
+.info-box {
+    font-size: 0.7rem;
+}
+
+.delete-report:hover{
+    color: orange;
+}
+
+.delete-resource:hover {
+    color: red;
+}
+
+.block-author:hover {
+    color: blue;
+}
+
+.unblock-user:hover {
+    color:green;
+}

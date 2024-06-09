@@ -28,7 +28,7 @@
                 </div>
             </form>
         </div>
-        <div class="comment" *ngFor="let comment of comments">
+        <div [ngClass]="{'comment': true, 'reported': comment.id.toString() === comentToSelectId}" *ngFor="let comment of comments" id="{{comment.id}}">
             <div class="info">
                 <div>
                     <div class="author">{{comment.authorUsername}}</div>

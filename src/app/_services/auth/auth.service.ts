@@ -54,7 +54,7 @@ export class AuthService {
   
   isAdmin(): boolean {
     const authorities = localStorage.getItem('authorities');
-    if(authorities) return authorities.includes('ROLE_ADMIN');
+    if(authorities) return authorities.includes('ROLE_ADMIN') || authorities.includes("ROLE_MODERATOR");
     return false;
   }
 

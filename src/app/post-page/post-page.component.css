@@ -91,6 +91,10 @@ button:hover {
     padding: 1rem;
 }
 
+.reported {
+    background-color: rgba(255, 0, 0, 0.5);
+}
+
 .comment-content {
     border-left: 3px solid blue;
     padding-left: 1rem;
